@@ -9,14 +9,12 @@ import {
   Platform,
 } from "react-native";
 
-export default function App() {
+export default function RegistrationScreen() {
   const [value, setValue] = useState("");
   const inputHandler = (text) => setValue(text);
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
-        Open up App.js to start working on your app! Mary is great!
-      </Text>
+      <Text style={styles.text}>RegistrationScreen</Text>
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
       >
