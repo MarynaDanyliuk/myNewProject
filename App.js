@@ -7,6 +7,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  ImageBackground,
 } from "react-native";
 
 export default function App() {
@@ -14,18 +15,33 @@ export default function App() {
   const inputHandler = (text) => setValue(text);
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
-        Open up App.js to start working on your app! Mary is great!
-      </Text>
-      <KeyboardAvoidingView
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
+      <ImageBackground
+        source={require("./assets/images/background_2x.jpg")}
+        style={styles.image}
       >
-        <TextInput
-          placeholder="Type text"
-          value={value}
-          onChangeText={inputHandler}
-        />
-      </KeyboardAvoidingView>
+        <Text style={styles.text}>
+          Open up App.js to start working on your app! Mary is great!
+        </Text>
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        >
+          <TextInput
+            placeholder="Type text"
+            value={value}
+            onChangeText={inputHandler}
+          />
+          <TextInput
+            placeholder="Type text"
+            value={value}
+            onChangeText={inputHandler}
+          />
+          <TextInput
+            placeholder="Type text"
+            value={value}
+            onChangeText={inputHandler}
+          />
+        </KeyboardAvoidingView>
+      </ImageBackground>
       <StatusBar style="auto" />
     </View>
   );
@@ -35,11 +51,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
   },
   text: {
-    color: "green",
-    fontSize: "30px",
+    color: "white",
+    fontSize: "40",
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
