@@ -8,7 +8,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   ImageBackground,
-  // Button,
   TouchableOpacity,
 } from "react-native";
 
@@ -17,9 +16,18 @@ import * as SplashScreen from "expo-splash-screen";
 // import { RegistrationScreen } from "./Screens/RegistrationScreen";
 // import { LoginScreen } from "./Screens/LoginScreen";
 
+// SplashScreen.preventAutoHideAsync()
+//   .then((result) =>
+//     console.log(`SplashScreen.preventAutoHideAsync() succeeded: ${result}`)
+//   )
+//   .catch(console.warn);
+
 export default function App() {
   const [value, setValue] = useState("");
   const inputHandler = (text) => setValue(text);
+
+  const [isShownKeyboard, setIsShownKeyboard] = useState(false);
+
   useEffect(() => {
     async function dismissSplash() {
       await SplashScreen.hideAsync();
@@ -32,26 +40,37 @@ export default function App() {
         source={require("./assets/images/background.jpg")}
         style={styles.image}
       >
-        <View style={styles.form_registration}>
-          <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        >
+          <View
+            style={{
+              ...styles.form_registration,
+              marginBottom: isShownKeyboard ? 32 : 0,
+            }}
           >
             <View style={styles.avatar}></View>
             <Text style={styles.text}>Реєстрація</Text>
+
             <TextInput
               style={styles.input}
               placeholder="Логін"
               placeholderTextColor="#BDBDBD"
               value={value}
               onChangeText={inputHandler}
+              onFocus={() => {
+                setIsShownKeyboard(true);
+              }}
             />
             <TextInput
               style={styles.input}
-              // style={styles.input}
               placeholder="Електронна пошта"
               placeholderTextColor="#BDBDBD"
               value={value}
               onChangeText={inputHandler}
+              onFocus={() => {
+                setIsShownKeyboard(true);
+              }}
             />
             <TextInput
               style={styles.input}
@@ -60,24 +79,15 @@ export default function App() {
               value={value}
               onChangeText={inputHandler}
               secureTextEntry={true}
+              onFocus={() => {
+                setIsShownKeyboard(true);
+              }}
             />
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity activeOpacity={0.7} style={styles.button}>
               <Text style={styles.button_title}>Зареєструватись</Text>
             </TouchableOpacity>
-            {/* <Button
-              style={styles.button}
-              color="#FF6C00"
-              title="Зареєструватись"
-              onPress={() => Alert.alert("Button with adjusted color pressed")}
-            /> */}
-          </KeyboardAvoidingView>
-        </View>
-
-        {/* <Text style={styles.text}>
-          Open up App.js to start working on your app! Mary is great!
-        </Text> */}
-        {/* <RegistrationScreen />
-        <LoginScreen /> */}
+          </View>
+        </KeyboardAvoidingView>
       </ImageBackground>
       <StatusBar style="auto" />
     </View>
@@ -122,14 +132,17 @@ const styles = StyleSheet.create({
     lineHeight: 18.75,
     padding: 16,
   },
+  "input:last-child": {
+    marginBottom: 0,
+  },
   button: {
     borderWidth: "1",
-    borderColor: "#FF6C00",
+    borderColor: Platform.OS === "ios" ? "transparent" : "#FF6C00",
     borderRadius: 25,
     backgroundColor: "#ffa500",
     marginHorizontal: 16,
-    marginTop: 43,
-    marginBottom: 113,
+    marginTop: 27,
+    // marginBottom: 113,
     height: 51,
     justifyContent: "center",
   },
@@ -147,6 +160,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     position: "absolute",
     top: -60,
-    left: 128,
+    marginHorizontal: 128,
+    // marginLeft: "auto",
+    // marginRight: "auto",
+    // transform: [{ translateY: -50 }],
   },
 });
