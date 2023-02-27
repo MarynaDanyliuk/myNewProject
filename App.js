@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
@@ -12,12 +12,20 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { RegistrationScreen } from "./Screens/RegistrationScreen";
-import { LoginScreen } from "./Screens/LoginScreen";
+import * as SplashScreen from "expo-splash-screen";
+
+// import { RegistrationScreen } from "./Screens/RegistrationScreen";
+// import { LoginScreen } from "./Screens/LoginScreen";
 
 export default function App() {
   const [value, setValue] = useState("");
   const inputHandler = (text) => setValue(text);
+  useEffect(() => {
+    async function dismissSplash() {
+      await SplashScreen.hideAsync();
+    }
+    dismissSplash();
+  });
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -28,6 +36,7 @@ export default function App() {
           <KeyboardAvoidingView
             behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
+            <View style={styles.avatar}></View>
             <Text style={styles.text}>Реєстрація</Text>
             <TextInput
               style={styles.input}
@@ -63,6 +72,7 @@ export default function App() {
             /> */}
           </KeyboardAvoidingView>
         </View>
+
         {/* <Text style={styles.text}>
           Open up App.js to start working on your app! Mary is great!
         </Text> */}
@@ -78,8 +88,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
   },
   text: {
     color: "#212121",
@@ -87,17 +95,19 @@ const styles = StyleSheet.create({
     lineHeight: "35.16px",
     textAlign: "center",
     marginBottom: 33,
+    marginTop: 92,
   },
   image: {
     flex: 1,
     resizeMode: "cover",
-    justifyContent: "center",
+    justifyContent: "flex-end",
   },
   form_registration: {
+    position: "relative",
     backgroundColor: "#fff",
-    // width: 355,
-    height: 400,
     justifyContent: "center",
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
   },
   input: {
     borderWidth: "1",
@@ -119,7 +129,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffa500",
     marginHorizontal: 16,
     marginTop: 43,
+    marginBottom: 113,
     height: 51,
+    justifyContent: "center",
   },
   button_title: {
     fontSize: 16,
@@ -127,5 +139,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     // textAlignVertical: "center",
     color: "#FFFFFF",
+  },
+  avatar: {
+    width: 120,
+    height: 120,
+    backgroundColor: "#F6F6F6",
+    borderRadius: 20,
+    position: "absolute",
+    top: -60,
+    left: 128,
   },
 });
