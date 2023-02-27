@@ -8,7 +8,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   ImageBackground,
-  Button,
+  // Button,
+  TouchableOpacity,
 } from "react-native";
 
 import { RegistrationScreen } from "./Screens/RegistrationScreen";
@@ -31,27 +32,35 @@ export default function App() {
             <TextInput
               style={styles.input}
               placeholder="Логін"
+              placeholderTextColor="#BDBDBD"
               value={value}
               onChangeText={inputHandler}
             />
             <TextInput
               style={styles.input}
+              // style={styles.input}
               placeholder="Електронна пошта"
+              placeholderTextColor="#BDBDBD"
               value={value}
               onChangeText={inputHandler}
             />
             <TextInput
               style={styles.input}
               placeholder="Пароль"
+              placeholderTextColor="#BDBDBD"
               value={value}
               onChangeText={inputHandler}
+              secureTextEntry={true}
             />
-            <Button
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.button_title}>Зареєструватись</Text>
+            </TouchableOpacity>
+            {/* <Button
               style={styles.button}
               color="#FF6C00"
               title="Зареєструватись"
               onPress={() => Alert.alert("Button with adjusted color pressed")}
-            />
+            /> */}
           </KeyboardAvoidingView>
         </View>
         {/* <Text style={styles.text}>
@@ -104,10 +113,19 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   button: {
-    // borderWidth: "1",
-    // borderColor: "#FF6C00",
+    borderWidth: "1",
+    borderColor: "#FF6C00",
+    borderRadius: 25,
     backgroundColor: "#ffa500",
-    width: 343,
+    marginHorizontal: 16,
+    marginTop: 43,
     height: 51,
+  },
+  button_title: {
+    fontSize: 16,
+    lineHeight: 18.75,
+    textAlign: "center",
+    // textAlignVertical: "center",
+    color: "#FFFFFF",
   },
 });
