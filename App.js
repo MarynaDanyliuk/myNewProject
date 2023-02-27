@@ -9,6 +9,8 @@ import {
   Platform,
   ImageBackground,
   TouchableOpacity,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 
 import * as SplashScreen from "expo-splash-screen";
@@ -22,11 +24,18 @@ import * as SplashScreen from "expo-splash-screen";
 //   )
 //   .catch(console.warn);
 
+const initialState = {
+  login: "",
+  email: "",
+  password: "",
+};
+
 export default function App() {
   const [value, setValue] = useState("");
   const inputHandler = (text) => setValue(text);
 
   const [isShownKeyboard, setIsShownKeyboard] = useState(false);
+  const [state, setState] = useState(initialState);
 
   useEffect(() => {
     async function dismissSplash() {
@@ -34,61 +43,73 @@ export default function App() {
     }
     dismissSplash();
   });
+
+  const keyboardHide = () => {
+    setIsShownKeyboard(false);
+
+    Keyboard.dismiss();
+  };
+
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require("./assets/images/background.jpg")}
-        style={styles.image}
-      >
-        <KeyboardAvoidingView
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
+      <TouchableWithoutFeedback onPress={keyboardHide}>
+        <ImageBackground
+          source={require("./assets/images/background.jpg")}
+          style={styles.image}
         >
-          <View
-            style={{
-              ...styles.form_registration,
-              marginBottom: isShownKeyboard ? 32 : 0,
-            }}
+          <KeyboardAvoidingView
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
-            <View style={styles.avatar}></View>
-            <Text style={styles.text}>Реєстрація</Text>
-
-            <TextInput
-              style={styles.input}
-              placeholder="Логін"
-              placeholderTextColor="#BDBDBD"
-              value={value}
-              onChangeText={inputHandler}
-              onFocus={() => {
-                setIsShownKeyboard(true);
+            <View
+              style={{
+                ...styles.form_registration,
+                paddingBottom: isShownKeyboard ? 32 : 113,
               }}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Електронна пошта"
-              placeholderTextColor="#BDBDBD"
-              value={value}
-              onChangeText={inputHandler}
-              onFocus={() => {
-                setIsShownKeyboard(true);
-              }}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Пароль"
-              placeholderTextColor="#BDBDBD"
-              value={value}
-              onChangeText={inputHandler}
-              secureTextEntry={true}
-              onFocus={() => {
-                setIsShownKeyboard(true);
-              }}
-            />
-            <TouchableOpacity activeOpacity={0.7} style={styles.button}>
-              <Text style={styles.button_title}>Зареєструватись</Text>
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-      </ImageBackground>
+            >
+              <View style={styles.avatar}></View>
+              <Text style={styles.text}>Реєстрація</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Логін"
+                placeholderTextColor="#BDBDBD"
+                value={value}
+                onChangeText={inputHandler}
+                onFocus={() => {
+                  setIsShownKeyboard(true);
+                }}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Електронна пошта"
+                placeholderTextColor="#BDBDBD"
+                value={value}
+                onChangeText={inputHandler}
+                onFocus={() => {
+                  setIsShownKeyboard(true);
+                }}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Пароль"
+                placeholderTextColor="#BDBDBD"
+                value={value}
+                onChangeText={inputHandler}
+                secureTextEntry={true}
+                onFocus={() => {
+                  setIsShownKeyboard(true);
+                }}
+              />
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={styles.button}
+                onPress={keyboardHide}
+              >
+                <Text style={styles.button_title}>Зареєструватись</Text>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
+        </ImageBackground>
+      </TouchableWithoutFeedback>
       <StatusBar style="auto" />
     </View>
   );
@@ -166,3 +187,54 @@ const styles = StyleSheet.create({
     // transform: [{ translateY: -50 }],
   },
 });
+
+{
+  /* <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        >
+          <View
+            style={{
+              ...styles.form_registration,
+              marginBottom: isShownKeyboard ? 32 : 0,
+            }}
+          >
+            <View style={styles.avatar}></View>
+            <Text style={styles.text}>Реєстрація</Text>
+
+            <TextInput
+              style={styles.input}
+              placeholder="Логін"
+              placeholderTextColor="#BDBDBD"
+              value={value}
+              onChangeText={inputHandler}
+              onFocus={() => {
+                setIsShownKeyboard(true);
+              }}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Електронна пошта"
+              placeholderTextColor="#BDBDBD"
+              value={value}
+              onChangeText={inputHandler}
+              onFocus={() => {
+                setIsShownKeyboard(true);
+              }}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Пароль"
+              placeholderTextColor="#BDBDBD"
+              value={value}
+              onChangeText={inputHandler}
+              secureTextEntry={true}
+              onFocus={() => {
+                setIsShownKeyboard(true);
+              }}
+            />
+            <TouchableOpacity activeOpacity={0.7} style={styles.button}>
+              <Text style={styles.button_title}>Зареєструватись</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView> */
+}
