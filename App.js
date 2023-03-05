@@ -11,24 +11,15 @@ import {
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
+  Dimensions,
 } from "react-native";
 
 import * as Font from "expo-font";
-
-// import AppLoading from "expo-app-loading";
-
-// import { AppLoading } from "expo";
 
 import * as SplashScreen from "expo-splash-screen";
 
 // import { RegistrationScreen } from "./Screens/RegistrationScreen";
 // import { LoginScreen } from "./Screens/LoginScreen";
-
-// SplashScreen.preventAutoHideAsync()
-//   .then((result) =>
-//     console.log(`SplashScreen.preventAutoHideAsync() succeeded: ${result}`)
-//   )
-//   .catch(console.warn);
 
 const initialState = {
   login: "",
@@ -47,37 +38,51 @@ export default function App() {
   const [state, setState] = useState(initialState);
   const [isReady, setIsReady] = useState(false);
 
+  // const windowDimensions = Dimensions.get("window");
+  // const screenDimensions = Dimensions.get("screen");
+  // const [dimensions, setDimensions] = useState({
+  //   window: windowDimensions,
+  //   screen: screenDimensions,
+  // });
+
   useEffect(() => {
     async function prepare() {
       try {
-        // Pre-load fonts, make any API calls you need to do here
         await loadApplication();
-        // Artificially delay for two seconds to simulate a slow loading
-        // experience. Please remove this if you copy and paste the code!
         await new Promise((resolve) => setTimeout(resolve, 2000));
       } catch (e) {
         console.warn(e);
       } finally {
-        // Tell the application to render
         setIsReady(true);
       }
     }
-
     prepare();
-    // ____________________________
-    // async function dismissSplash() {
-    //   await SplashScreen.hideAsync();
-    // }
-    // dismissSplash();
   });
+
+  useEffect(() => {
+    const onChange = () => {
+      const width = Dimensions.get("window").width;
+      console.log(width);
+    };
+
+    Dimensions.addEventListener("change", onChange);
+    return () => {
+      Dimensions.removeEventListener("change", onChange);
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   const subscription = Dimensions.addEventListener(
+  //     "change",
+  //     ({ window, screen }) => {
+  //       setDimensions({ window, screen });
+  //     }
+  //   );
+  //   return () => subscription?.remove();
+  // });
 
   const onLayoutRootView = useCallback(async () => {
     if (isReady) {
-      // This tells the splash screen to hide immediately! If we call this after
-      // `setAppIsReady`, then we may see a blank screen while the app is
-      // loading its initial state and rendering its first pixels. So instead,
-      // we hide the splash screen once we know the root view has already
-      // performed layout.
       await SplashScreen.hideAsync();
     }
   }, [isReady]);
@@ -92,17 +97,6 @@ export default function App() {
     Keyboard.dismiss();
   };
 
-  // if (!isReady) {
-  //   return (
-  //     <AppLoading
-  //       startAsync={loadApplication}
-  //       onFinish={() => setIsReady(true)}
-  //       onError={console.warn}
-  //     />
-  //   );
-  // }
-
-  // const { login, email, password } = state;
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
       <TouchableWithoutFeedback onPress={keyboardHide}>
@@ -120,7 +114,7 @@ export default function App() {
               }}
             >
               <View style={styles.avatar}></View>
-              <Text style={styles.text}>Реєстрація</Text>
+              <Text style={styles.screen_title}>Реєстрація</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Логін"
@@ -129,7 +123,6 @@ export default function App() {
                 onChangeText={(value) => {
                   setState((prevState) => ({ ...prevState, login: value }));
                 }}
-                // onChangeText={onChangeLogin}
                 onFocus={() => {
                   setIsShownKeyboard(true);
                 }}
@@ -182,7 +175,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  text: {
+  screen_title: {
     fontFamily: "Montserrat-Regular",
     color: "#212121",
     fontSize: "30px",
@@ -211,6 +204,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginBottom: 16,
     backgroundColor: "#F6F6F6",
+    fontFamily: "Montserrat-Regular",
     color: "#212121",
     fontSize: 16,
     lineHeight: 18.75,
@@ -233,6 +227,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 18.75,
     textAlign: "center",
+    fontFamily: "Montserrat-Regular",
     // textAlignVertical: "center",
     color: "#FFFFFF",
   },
