@@ -13,7 +13,13 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
-import * as SplashScreen from "expo-splash-screen";
+import * as Font from "expo-font";
+
+import AppLoading from "expo-app-loading";
+
+// import { AppLoading } from "expo";
+
+// import * as SplashScreen from "expo-splash-screen";
 
 // import { RegistrationScreen } from "./Screens/RegistrationScreen";
 // import { LoginScreen } from "./Screens/LoginScreen";
@@ -30,26 +36,41 @@ const initialState = {
   password: "",
 };
 
-export default function App() {
-  const [value, setValue] = useState("");
-  const inputHandler = (text) => setValue(text);
+const loadApplication = async () => {
+  await Font.loadAsync({
+    "Montserrat-Regular": require("./assets/fonts/Montserrat-Regular.ttf"),
+  });
+};
 
+export default function App() {
   const [isShownKeyboard, setIsShownKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    async function dismissSplash() {
-      await SplashScreen.hideAsync();
-    }
-    dismissSplash();
+    // async function dismissSplash() {
+    //   await SplashScreen.hideAsync();
+    // }
+    // dismissSplash();
   });
 
   const keyboardHide = () => {
     setIsShownKeyboard(false);
-
+    setState(initialState);
     Keyboard.dismiss();
   };
 
+  if (!isReady) {
+    return (
+      <AppLoading
+        startAsync={loadApplication}
+        onFinish={() => setIsReady(true)}
+        onError={console.warn}
+      />
+    );
+  }
+
+  // const { login, email, password } = state;
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={keyboardHide}>
@@ -72,8 +93,11 @@ export default function App() {
                 style={styles.input}
                 placeholder="Логін"
                 placeholderTextColor="#BDBDBD"
-                value={value}
-                onChangeText={inputHandler}
+                value={state.login}
+                onChangeText={(value) => {
+                  setState((prevState) => ({ ...prevState, login: value }));
+                }}
+                // onChangeText={onChangeLogin}
                 onFocus={() => {
                   setIsShownKeyboard(true);
                 }}
@@ -82,8 +106,11 @@ export default function App() {
                 style={styles.input}
                 placeholder="Електронна пошта"
                 placeholderTextColor="#BDBDBD"
-                value={value}
-                onChangeText={inputHandler}
+                value={state.email}
+                onChangeText={(value) => {
+                  setState((prevState) => ({ ...prevState, email: value }));
+                }}
+                // onChangeText={onChangeEmail}
                 onFocus={() => {
                   setIsShownKeyboard(true);
                 }}
@@ -92,8 +119,11 @@ export default function App() {
                 style={styles.input}
                 placeholder="Пароль"
                 placeholderTextColor="#BDBDBD"
-                value={value}
-                onChangeText={inputHandler}
+                value={state.password}
+                onChangeText={(value) => {
+                  setState((prevState) => ({ ...prevState, password: value }));
+                }}
+                // onChangeText={onChangePassword}
                 secureTextEntry={true}
                 onFocus={() => {
                   setIsShownKeyboard(true);
@@ -121,6 +151,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   text: {
+    fontFamily: "Montserrat-Regular",
     color: "#212121",
     fontSize: "30px",
     lineHeight: "35.16px",
@@ -163,7 +194,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffa500",
     marginHorizontal: 16,
     marginTop: 27,
-    // marginBottom: 113,
     height: 51,
     justifyContent: "center",
   },
@@ -238,3 +268,14 @@ const styles = StyleSheet.create({
           </View>
         </KeyboardAvoidingView> */
 }
+
+// ____________________________
+// const [state, setState] = useState(initialState)
+// const [login, setLogin] = React.useState("Useless Text");
+// const [email, setEmail] = React.useState("");
+// const [password, setPassword] = React.useState("");
+// const [value, setValue] = useState("");
+// const inputHandler = (text) => setValue(text);
+// const onChangeLogin = (value) => setLogin(value);
+// const onChangeEmail = (value) => setEmail(value);
+// const onChangePassword = (value) => setPassword(value);
