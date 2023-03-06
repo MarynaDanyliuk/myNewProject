@@ -64,11 +64,14 @@ export default function App() {
       const width = Dimensions.get("window").width;
       console.log(width);
     };
-
-    Dimensions.addEventListener("change", onChange);
+    const dem = Dimensions.addEventListener("change", onChange);
     return () => {
-      Dimensions.removeEventListener("change", onChange);
+      dem.remove();
     };
+    // Dimensions.addEventListener("change", onChange);
+    // return () => {
+    //   Dimensions.removeEventListener("change", onChange);
+    // };
   }, []);
 
   // useEffect(() => {
