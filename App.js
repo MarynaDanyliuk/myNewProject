@@ -38,13 +38,6 @@ export default function App() {
   const [state, setState] = useState(initialState);
   const [isReady, setIsReady] = useState(false);
 
-  // const windowDimensions = Dimensions.get("window");
-  // const screenDimensions = Dimensions.get("screen");
-  // const [dimensions, setDimensions] = useState({
-  //   window: windowDimensions,
-  //   screen: screenDimensions,
-  // });
-
   useEffect(() => {
     async function prepare() {
       try {
@@ -65,24 +58,8 @@ export default function App() {
       console.log(width);
     };
     const dem = Dimensions.addEventListener("change", onChange);
-    return () => {
-      dem.remove();
-    };
-    // Dimensions.addEventListener("change", onChange);
-    // return () => {
-    //   Dimensions.removeEventListener("change", onChange);
-    // };
+    return () => dem.remove();
   }, []);
-
-  // useEffect(() => {
-  //   const subscription = Dimensions.addEventListener(
-  //     "change",
-  //     ({ window, screen }) => {
-  //       setDimensions({ window, screen });
-  //     }
-  //   );
-  //   return () => subscription?.remove();
-  // });
 
   const onLayoutRootView = useCallback(async () => {
     if (isReady) {
@@ -113,12 +90,12 @@ export default function App() {
             <View
               style={{
                 ...styles.form_registration,
-                paddingBottom: isShownKeyboard ? 32 : 113,
+                paddingBottom: isShownKeyboard ? 32 : 78,
               }}
             >
-              <View style={styles.avatar}></View>
-              <Text style={styles.screen_title}>Реєстрація</Text>
-              <TextInput
+              {/* <View style={styles.avatar}></View> */}
+              <Text style={styles.screen_title}>Увійти</Text>
+              {/* <TextInput
                 style={styles.input}
                 placeholder="Логін"
                 placeholderTextColor="#BDBDBD"
@@ -129,7 +106,7 @@ export default function App() {
                 onFocus={() => {
                   setIsShownKeyboard(true);
                 }}
-              />
+              /> */}
               <TextInput
                 style={styles.input}
                 placeholder="Електронна пошта"
@@ -138,7 +115,6 @@ export default function App() {
                 onChangeText={(value) => {
                   setState((prevState) => ({ ...prevState, email: value }));
                 }}
-                // onChangeText={onChangeEmail}
                 onFocus={() => {
                   setIsShownKeyboard(true);
                 }}
@@ -151,7 +127,6 @@ export default function App() {
                 onChangeText={(value) => {
                   setState((prevState) => ({ ...prevState, password: value }));
                 }}
-                // onChangeText={onChangePassword}
                 secureTextEntry={true}
                 onFocus={() => {
                   setIsShownKeyboard(true);
@@ -164,6 +139,7 @@ export default function App() {
               >
                 <Text style={styles.button_title}>Зареєструватись</Text>
               </TouchableOpacity>
+              <Text style={styles.link}>У вас уже є аккаунт? Увійти</Text>
             </View>
           </KeyboardAvoidingView>
         </ImageBackground>
@@ -185,7 +161,7 @@ const styles = StyleSheet.create({
     lineHeight: "35.16px",
     textAlign: "center",
     marginBottom: 33,
-    marginTop: 92,
+    marginTop: 32,
   },
   image: {
     flex: 1,
@@ -193,9 +169,11 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   form_registration: {
-    position: "relative",
+    display: "flex",
+    // alignItems: "center",
+    // position: "relative",
     backgroundColor: "#fff",
-    justifyContent: "center",
+    // justifyContent: "center",
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
   },
@@ -204,6 +182,7 @@ const styles = StyleSheet.create({
     borderColor: "#E8E8E8",
     borderRadius: 10,
     height: 50,
+    // width: 300,
     marginHorizontal: 16,
     marginBottom: 16,
     backgroundColor: "#F6F6F6",
@@ -223,6 +202,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffa500",
     marginHorizontal: 16,
     marginTop: 27,
+    marginBottom: 16,
     height: 51,
     justifyContent: "center",
   },
@@ -235,19 +215,84 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
   avatar: {
+    // display: "flex",
     width: 120,
     height: 120,
     backgroundColor: "#F6F6F6",
     borderRadius: 20,
-    position: "absolute",
+    // position: "absolute",
     top: -60,
-    marginHorizontal: 128,
+    // justifyContent: "center",
+    // alignItems: "center",
+
     // marginLeft: "auto",
     // marginRight: "auto",
     // transform: [{ translateY: -50 }],
   },
+  link: {
+    fontSize: 16,
+    lineHeight: 18.75,
+    textAlign: "center",
+    fontFamily: "Montserrat-Regular",
+    textDecorationLine: "underline",
+  },
 });
-
+// ________________Registration page_______________________
+// <View
+//   style={{
+//     ...styles.form_registration,
+//     paddingBottom: isShownKeyboard ? 32 : 78,
+//   }}
+// >
+//   <View style={styles.avatar}></View>
+//   <Text style={styles.screen_title}>Реєстрація</Text>
+//   <TextInput
+//     style={styles.input}
+//     placeholder="Логін"
+//     placeholderTextColor="#BDBDBD"
+//     value={state.login}
+//     onChangeText={(value) => {
+//       setState((prevState) => ({ ...prevState, login: value }));
+//     }}
+//     onFocus={() => {
+//       setIsShownKeyboard(true);
+//     }}
+//   />
+//   <TextInput
+//     style={styles.input}
+//     placeholder="Електронна пошта"
+//     placeholderTextColor="#BDBDBD"
+//     value={state.email}
+//     onChangeText={(value) => {
+//       setState((prevState) => ({ ...prevState, email: value }));
+//     }}
+//     onFocus={() => {
+//       setIsShownKeyboard(true);
+//     }}
+//   />
+//   <TextInput
+//     style={styles.input}
+//     placeholder="Пароль"
+//     placeholderTextColor="#BDBDBD"
+//     value={state.password}
+//     onChangeText={(value) => {
+//       setState((prevState) => ({ ...prevState, password: value }));
+//     }}
+//     secureTextEntry={true}
+//     onFocus={() => {
+//       setIsShownKeyboard(true);
+//     }}
+//   />
+//   <TouchableOpacity
+//     activeOpacity={0.7}
+//     style={styles.button}
+//     onPress={keyboardHide}
+//   >
+//     <Text style={styles.button_title}>Зареєструватись</Text>
+//   </TouchableOpacity>
+//   <Text style={styles.link}>У вас уже є аккаунт? Увійти</Text>
+// </View>;
+// ____________________________________________________________
 {
   /* <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
