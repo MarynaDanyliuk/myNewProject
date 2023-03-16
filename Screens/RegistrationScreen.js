@@ -88,7 +88,9 @@ export default function RegistrationScreen() {
                 paddingBottom: isShownKeyboard ? 32 : 78,
               }}
             >
-              <View style={styles.avatar}></View>
+              <View style={styles.wrapper_avatar}>
+                <View style={styles.avatar}></View>
+              </View>
               <Text style={styles.screen_title}>Реєстрація</Text>
               <TextInput
                 style={styles.input}
@@ -156,7 +158,6 @@ const styles = StyleSheet.create({
     lineHeight: "35.16px",
     textAlign: "center",
     marginBottom: 33,
-    // marginTop: 92,
   },
   image: {
     flex: 1,
@@ -165,10 +166,7 @@ const styles = StyleSheet.create({
   },
   form_registration: {
     display: "flex",
-    // alignItems: "center",
-    // position: "relative",
     backgroundColor: "#fff",
-    // justifyContent: "center",
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
   },
@@ -177,7 +175,6 @@ const styles = StyleSheet.create({
     borderColor: "#E8E8E8",
     borderRadius: 10,
     height: 50,
-    // width: 300,
     marginHorizontal: 16,
     marginBottom: 16,
     backgroundColor: "#F6F6F6",
@@ -206,23 +203,18 @@ const styles = StyleSheet.create({
     lineHeight: 18.75,
     textAlign: "center",
     fontFamily: "Montserrat-Regular",
-    // textAlignVertical: "center",
     color: "#FFFFFF",
   },
+  wrapper_avatar: {
+    display: "flex",
+    alignItems: "center",
+  },
   avatar: {
-    // display: "flex",
     width: 120,
     height: 120,
     backgroundColor: "#F6F6F6",
     borderRadius: 20,
-    // position: "absolute",
     top: -60,
-    // justifyContent: "center",
-    // alignItems: "center",
-
-    // marginLeft: "auto",
-    // marginRight: "auto",
-    // transform: [{ translateY: -50 }],
   },
   link: {
     fontSize: 16,
