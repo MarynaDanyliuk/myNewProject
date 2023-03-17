@@ -6,7 +6,11 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "react-devtools": "react-devtools"
+  },
+  "overrides": {
+    "react-devtools-core": "~4.25.0"
   },
   "dependencies": {
     "expo": "~47.0.12",
@@ -19,7 +23,8 @@
     "react-native-splash-screen": "^3.3.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "react-devtools": "^4.27.2"
   },
   "private": true
 }
