@@ -18,6 +18,9 @@ import * as Font from "expo-font";
 
 import * as SplashScreen from "expo-splash-screen";
 
+import RegistrationScreen from "./Screens/RegistrationScreen";
+import LoginScreen from "./Screens/LoginScreen";
+
 const initialState = {
   login: "",
   email: "",
@@ -84,15 +87,14 @@ export default function App() {
           <KeyboardAvoidingView
             behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
-            <View
+            <RegistrationScreen />
+            <LoginScreen />
+            {/* <View
               style={{
                 ...styles.form_registration,
                 paddingBottom: isShownKeyboard ? 32 : 78,
               }}
             >
-              {/* <View style={styles.wrapper_avatar}>
-                <View style={styles.avatar}></View>
-              </View> */}
               <Text style={styles.screen_title}>Увійти</Text>
               <TextInput
                 style={styles.input}
@@ -127,7 +129,7 @@ export default function App() {
                 <Text style={styles.button_title}>Зареєструватись</Text>
               </TouchableOpacity>
               <Text style={styles.link}>У вас уже є аккаунт? Увійти</Text>
-            </View>
+            </View> */}
           </KeyboardAvoidingView>
         </ImageBackground>
       </TouchableWithoutFeedback>
@@ -219,6 +221,67 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
 });
+
+// _______________Login page___________________________
+
+// <View style={styles.container} onLayout={onLayoutRootView}>
+//   <TouchableWithoutFeedback onPress={keyboardHide}>
+//     <ImageBackground
+//       source={require("./assets/images/background.jpg")}
+//       style={styles.image}
+//     >
+//       <KeyboardAvoidingView
+//         behavior={Platform.OS == "ios" ? "padding" : "height"}
+//       >
+//         <View
+//           style={{
+//             ...styles.form_registration,
+//             paddingBottom: isShownKeyboard ? 32 : 78,
+//           }}
+//         >
+//           {/* <View style={styles.wrapper_avatar}>
+//             <View style={styles.avatar}></View>
+//           </View> */}
+//           <Text style={styles.screen_title}>Увійти</Text>
+//           <TextInput
+//             style={styles.input}
+//             placeholder="Електронна пошта"
+//             placeholderTextColor="#BDBDBD"
+//             value={state.email}
+//             onChangeText={(value) => {
+//               setState((prevState) => ({ ...prevState, email: value }));
+//             }}
+//             onFocus={() => {
+//               setIsShownKeyboard(true);
+//             }}
+//           />
+//           <TextInput
+//             style={styles.input}
+//             placeholder="Пароль"
+//             placeholderTextColor="#BDBDBD"
+//             value={state.password}
+//             onChangeText={(value) => {
+//               setState((prevState) => ({ ...prevState, password: value }));
+//             }}
+//             secureTextEntry={true}
+//             onFocus={() => {
+//               setIsShownKeyboard(true);
+//             }}
+//           />
+//           <TouchableOpacity
+//             activeOpacity={0.7}
+//             style={styles.button}
+//             onPress={keyboardHide}
+//           >
+//             <Text style={styles.button_title}>Зареєструватись</Text>
+//           </TouchableOpacity>
+//           <Text style={styles.link}>У вас уже є аккаунт? Увійти</Text>
+//         </View>
+//       </KeyboardAvoidingView>
+//     </ImageBackground>
+//   </TouchableWithoutFeedback>
+//   <StatusBar style="auto" />
+// </View>
 
 // ________________Registration page_______________________
 // <View
