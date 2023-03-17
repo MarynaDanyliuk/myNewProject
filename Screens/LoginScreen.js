@@ -24,8 +24,6 @@ const initialState = {
   password: "",
 };
 
-// ./assets/fonts/Montserrat-Regular.ttf
-
 const loadApplication = async () => {
   await Font.loadAsync({
     "Montserrat-Regular": require("../assets/fonts/Montserrat-Regular.ttf"),
