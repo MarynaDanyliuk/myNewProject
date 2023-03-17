@@ -42,7 +42,6 @@ export default function App() {
     async function prepare() {
       try {
         await loadApplication();
-        await new Promise((resolve) => setTimeout(resolve, 2000));
       } catch (e) {
         console.warn(e);
       } finally {
@@ -50,13 +49,14 @@ export default function App() {
       }
     }
     prepare();
-  });
+  }, []);
 
   useEffect(() => {
     const onChange = () => {
       const width = Dimensions.get("window").width;
       console.log(width);
     };
+
     const dem = Dimensions.addEventListener("change", onChange);
     return () => dem.remove();
   }, []);
