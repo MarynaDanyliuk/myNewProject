@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
     lineHeight: "35.16px",
     textAlign: "center",
     marginBottom: 33,
+    marginTop: 92,
   },
   image: {
     flex: 1,
@@ -187,6 +188,10 @@ const styles = StyleSheet.create({
   "input:last-child": {
     marginBottom: 0,
   },
+  "input:focus": {
+    borderWidth: "1",
+    borderColor: "#blue",
+  },
   button: {
     borderWidth: "1",
     borderColor: Platform.OS === "ios" ? "transparent" : "#FF6C00",
@@ -210,6 +215,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   avatar: {
+    position: "absolute",
     width: 120,
     height: 120,
     backgroundColor: "#F6F6F6",
