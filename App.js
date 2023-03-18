@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
@@ -14,18 +16,25 @@ import {
   Dimensions,
 } from "react-native";
 
-import * as Font from "expo-font";
+// import { NavigationContainer } from "@react-navigation/native";
+// import { createStackNavigator } from "@react-navigation/stack";
 
 import * as SplashScreen from "expo-splash-screen";
+import * as Font from "expo-font";
+
+import { AppLoading } from "expo";
 
 import RegistrationScreen from "./Screens/RegistrationScreen";
 import LoginScreen from "./Screens/LoginScreen";
+import Main from "./components/Main";
 
 const initialState = {
   login: "",
   email: "",
   password: "",
 };
+
+SplashScreen.preventAutoHideAsync();
 
 const loadApplication = async () => {
   await Font.loadAsync({
@@ -64,6 +73,7 @@ export default function App() {
   const onLayoutRootView = useCallback(async () => {
     if (isReady) {
       await SplashScreen.hideAsync();
+      // await SplashScreen.show();
     }
   }, [isReady]);
 
@@ -77,109 +87,123 @@ export default function App() {
     Keyboard.dismiss();
   };
 
+  const MainStack = createStackNavigator();
+
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
-      <TouchableWithoutFeedback onPress={keyboardHide}>
-        <ImageBackground
-          source={require("./assets/images/background.jpg")}
-          style={styles.image}
-        >
-          <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-          >
-            <RegistrationScreen />
-            <LoginScreen />
-          </KeyboardAvoidingView>
-        </ImageBackground>
-      </TouchableWithoutFeedback>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <Main />
+    </>
+    // <View style={styles.container} onLayout={onLayoutRootView}>
+    //   <TouchableWithoutFeedback onPress={keyboardHide}>
+    //     <ImageBackground
+    //       source={require("./assets/images/background.jpg")}
+    //       style={styles.image}
+    //     >
+    //       <KeyboardAvoidingView
+    //         behavior={Platform.OS == "ios" ? "padding" : "height"}
+    //       >
+
+    /* <NavigationContainer>
+              <MainStack.Navigator>
+                <MainStack.Screen
+                  name="Registration"
+                  component={RegistrationScreen}
+                />
+
+                <MainStack.Screen name="Login" component={LoginScreen} />
+              </MainStack.Navigator>
+            </NavigationContainer> */
+    //       </KeyboardAvoidingView>
+    //     </ImageBackground>
+    //   </TouchableWithoutFeedback>
+    //   <StatusBar style="auto" />
+    // </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  screen_title: {
-    fontFamily: "Montserrat-Regular",
-    color: "#212121",
-    fontSize: "30px",
-    lineHeight: "35.16px",
-    textAlign: "center",
-    marginBottom: 33,
-    marginTop: 32,
-  },
-  image: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "flex-end",
-  },
-  form_registration: {
-    display: "flex",
-    backgroundColor: "#fff",
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-  },
-  input: {
-    borderWidth: "1",
-    borderColor: "#E8E8E8",
-    borderRadius: 10,
-    height: 50,
-    marginHorizontal: 16,
-    marginBottom: 16,
-    backgroundColor: "#F6F6F6",
-    fontFamily: "Montserrat-Regular",
-    color: "#212121",
-    fontSize: 16,
-    lineHeight: 18.75,
-    padding: 16,
-    "&:active": {
-      borderWidth: "1",
-      borderColor: "#FF6C00",
-    },
-  },
-  "input:last-child": {
-    marginBottom: 0,
-  },
-  button: {
-    borderWidth: "1",
-    borderColor: Platform.OS === "ios" ? "transparent" : "#FF6C00",
-    borderRadius: 25,
-    backgroundColor: "#ffa500",
-    marginHorizontal: 16,
-    marginTop: 27,
-    marginBottom: 16,
-    height: 51,
-    justifyContent: "center",
-  },
-  button_title: {
-    fontSize: 16,
-    lineHeight: 18.75,
-    textAlign: "center",
-    fontFamily: "Montserrat-Regular",
-    color: "#FFFFFF",
-  },
-  wrapper_avatar: {
-    display: "flex",
-    alignItems: "center",
-  },
-  avatar: {
-    width: 120,
-    height: 120,
-    backgroundColor: "#F6F6F6",
-    borderRadius: 20,
-    top: -60,
-  },
-  link: {
-    fontSize: 16,
-    lineHeight: 18.75,
-    textAlign: "center",
-    fontFamily: "Montserrat-Regular",
-    textDecorationLine: "underline",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//   },
+//   screen_title: {
+//     fontFamily: "Montserrat-Regular",
+//     color: "#212121",
+//     fontSize: "30px",
+//     lineHeight: "35.16px",
+//     textAlign: "center",
+//     marginBottom: 33,
+//     marginTop: 32,
+//   },
+//   image: {
+//     flex: 1,
+//     resizeMode: "cover",
+//     justifyContent: "flex-end",
+//   },
+//   form_registration: {
+//     display: "flex",
+//     backgroundColor: "#fff",
+//     borderTopRightRadius: 20,
+//     borderTopLeftRadius: 20,
+//   },
+//   input: {
+//     borderWidth: "1",
+//     borderColor: "#E8E8E8",
+//     borderRadius: 10,
+//     height: 50,
+//     marginHorizontal: 16,
+//     marginBottom: 16,
+//     backgroundColor: "#F6F6F6",
+//     fontFamily: "Montserrat-Regular",
+//     color: "#212121",
+//     fontSize: 16,
+//     lineHeight: 18.75,
+//     padding: 16,
+//     "&:active": {
+//       borderWidth: "1",
+//       borderColor: "#FF6C00",
+//     },
+//   },
+//   "input:last-child": {
+//     marginBottom: 0,
+//   },
+//   button: {
+//     borderWidth: "1",
+//     borderColor: Platform.OS === "ios" ? "transparent" : "#FF6C00",
+//     borderRadius: 25,
+//     backgroundColor: "#ffa500",
+//     marginHorizontal: 16,
+//     marginTop: 27,
+//     marginBottom: 16,
+//     height: 51,
+//     justifyContent: "center",
+//   },
+//   button_title: {
+//     fontSize: 16,
+//     lineHeight: 18.75,
+//     textAlign: "center",
+//     fontFamily: "Montserrat-Regular",
+//     color: "#FFFFFF",
+//   },
+//   wrapper_avatar: {
+//     display: "flex",
+//     alignItems: "center",
+//   },
+//   avatar: {
+//     width: 120,
+//     height: 120,
+//     backgroundColor: "#F6F6F6",
+//     borderRadius: 20,
+//     top: -60,
+//   },
+//   link: {
+//     fontSize: 16,
+//     lineHeight: 18.75,
+//     textAlign: "center",
+//     fontFamily: "Montserrat-Regular",
+//     textDecorationLine: "underline",
+//   },
+// });
 
 {
   /* <View

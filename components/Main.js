@@ -1,21 +1,44 @@
-// import React, { useEffect, useState } from "react";
-// import { useSelector, useDispatch } from "react-redux";
-// import { NavigationContainer } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 // import { useRoute } from "../router";
 // import { authChangeStateUser } from "../redux/auth/authOperations";
 
-// const Main = () => {
-//   const { stateChange } = useSelector((state) => state.auth);
+import RegistrationScreen from "../Screens/RegistrationScreen";
+import LoginScreen from "../Screens/LoginScreen";
 
-//   const dispatch = useDispatch();
+const Main = () => {
+  const MainStack = createStackNavigator(); // вказує на групу навігаторів
 
-//   useEffect(() => {
-//     dispatch(authChangeStateUser());
-//   }, [stateChange]);
+  //   const { stateChange } = useSelector((state) => state.auth);
 
-//   const routing = useRoute(stateChange);
+  //   const dispatch = useDispatch();
 
-//   return <NavigationContainer>{routing}</NavigationContainer>;
-// };
+  //   useEffect(() => {
+  //     dispatch(authChangeStateUser());
+  //   }, [stateChange]);
 
-// export default Main;
+  //   const routing = useRoute(stateChange);
+
+  return (
+    <NavigationContainer>
+      <MainStack.Navigator>
+        <MainStack.Screen
+          options={{ headerShown: false }}
+          name="Registration"
+          component={RegistrationScreen}
+        />
+        <MainStack.Screen
+          options={{ headerShown: false }}
+          name="Login"
+          component={LoginScreen}
+        />
+      </MainStack.Navigator>
+    </NavigationContainer>
+  );
+
+  //   return <NavigationContainer>{routing}</NavigationContainer>;
+};
+
+export default Main;
