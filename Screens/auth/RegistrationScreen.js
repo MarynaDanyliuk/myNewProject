@@ -26,7 +26,7 @@ const initialState = {
 
 const loadApplication = async () => {
   await Font.loadAsync({
-    "Montserrat-Regular": require("../assets/fonts/Montserrat-Regular.ttf"),
+    "Montserrat-Regular": require("../../assets/fonts/Montserrat-Regular.ttf"),
   });
 };
 
@@ -76,7 +76,7 @@ export default function RegistrationScreen({ navigation }) {
     <View style={styles.container} onLayout={onLayoutRootView}>
       <TouchableWithoutFeedback onPress={keyboardHide}>
         <ImageBackground
-          source={require("../assets/images/background.jpg")}
+          source={require("../../assets/images/background.jpg")}
           style={styles.image}
         >
           <KeyboardAvoidingView

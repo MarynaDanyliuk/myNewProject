@@ -24,8 +24,8 @@ import * as Font from "expo-font";
 
 import { AppLoading } from "expo";
 
-import RegistrationScreen from "./Screens/RegistrationScreen";
-import LoginScreen from "./Screens/LoginScreen";
+// import RegistrationScreen from "./Screens/auth/RegistrationScreen";
+// import LoginScreen from "../Screens/auth/LoginScreen";
 import Main from "./components/Main";
 
 const initialState = {

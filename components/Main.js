@@ -5,8 +5,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 // import { useRoute } from "../router";
 // import { authChangeStateUser } from "../redux/auth/authOperations";
 
-import RegistrationScreen from "../Screens/RegistrationScreen";
-import LoginScreen from "../Screens/LoginScreen";
+import RegistrationScreen from "../Screens/auth/RegistrationScreen";
+import LoginScreen from "../Screens/auth/LoginScreen";
 
 const Main = () => {
   const MainStack = createStackNavigator(); // вказує на групу навігаторів
@@ -37,8 +37,6 @@ const Main = () => {
       </MainStack.Navigator>
     </NavigationContainer>
   );
-
-  //   return <NavigationContainer>{routing}</NavigationContainer>;
 };
 
 export default Main;
