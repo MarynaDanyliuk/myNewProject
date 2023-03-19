@@ -13,7 +13,7 @@ import PostScreen from "../Screens/main/PostScreen";
 import CreatePostScreen from "../Screens/main/CreatePostsScreen";
 
 const Main = () => {
-  const MainStack = createStackNavigator(); // вказує на групу навігаторів
+  const MainStack = createStackNavigator();
   const MainTab = createBottomTabNavigator();
   //   const { stateChange } = useSelector((state) => state.auth);
 
