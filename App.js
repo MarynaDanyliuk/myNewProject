@@ -2,19 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  KeyboardAvoidingView,
-  Platform,
-  ImageBackground,
-  TouchableOpacity,
-  Keyboard,
-  TouchableWithoutFeedback,
-  Dimensions,
-} from "react-native";
+import { Dimensions } from "react-native";
 
 // import { NavigationContainer } from "@react-navigation/native";
 // import { createStackNavigator } from "@react-navigation/stack";
@@ -22,7 +10,7 @@ import {
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 
-import { AppLoading } from "expo";
+// import { AppLoading } from "expo";
 
 // import RegistrationScreen from "./Screens/auth/RegistrationScreen";
 // import LoginScreen from "../Screens/auth/LoginScreen";
@@ -43,8 +31,8 @@ const loadApplication = async () => {
 };
 
 export default function App() {
-  const [isShownKeyboard, setIsShownKeyboard] = useState(false);
-  const [state, setState] = useState(initialState);
+  // const [isShownKeyboard, setIsShownKeyboard] = useState(false);
+  // const [state, setState] = useState(initialState);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -81,43 +69,18 @@ export default function App() {
     return null;
   }
 
-  const keyboardHide = () => {
-    setIsShownKeyboard(false);
-    setState(initialState);
-    Keyboard.dismiss();
-  };
+  // const keyboardHide = () => {
+  //   setIsShownKeyboard(false);
+  //   setState(initialState);
+  //   Keyboard.dismiss();
+  // };
 
-  const MainStack = createStackNavigator();
+  // const MainStack = createStackNavigator();
 
   return (
     <>
       <Main />
     </>
-    // <View style={styles.container} onLayout={onLayoutRootView}>
-    //   <TouchableWithoutFeedback onPress={keyboardHide}>
-    //     <ImageBackground
-    //       source={require("./assets/images/background.jpg")}
-    //       style={styles.image}
-    //     >
-    //       <KeyboardAvoidingView
-    //         behavior={Platform.OS == "ios" ? "padding" : "height"}
-    //       >
-
-    /* <NavigationContainer>
-              <MainStack.Navigator>
-                <MainStack.Screen
-                  name="Registration"
-                  component={RegistrationScreen}
-                />
-
-                <MainStack.Screen name="Login" component={LoginScreen} />
-              </MainStack.Navigator>
-            </NavigationContainer> */
-    //       </KeyboardAvoidingView>
-    //     </ImageBackground>
-    //   </TouchableWithoutFeedback>
-    //   <StatusBar style="auto" />
-    // </View>
   );
 }
 

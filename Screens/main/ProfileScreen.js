@@ -1,18 +1,32 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet, KeyboardAvoidingView } from "react-native";
 
-const ProfileScreen = () => {
+export default function ProfileScreen() {
   return (
     <View style={styles.container}>
-      <Text>Profile screen</Text>;
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+      >
+        <View>
+          <Text style={styles.screen_title}>Profile Screen</Text>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   );
-};
-export default ProfileScreen;
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+  screen_title: {
+    fontFamily: "Montserrat-Regular",
+    color: "#212121",
+    fontSize: "30px",
+    lineHeight: "35.16px",
+    textAlign: "center",
+    marginBottom: 33,
+    marginTop: 32,
   },
 });
