@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, KeyboardAvoidingView } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function PostScreen() {
   return (
@@ -9,6 +10,7 @@ export default function PostScreen() {
       >
         <View>
           <Text style={styles.screen_title}>Post Screen</Text>
+          <Ionicons name="md-checkmark-circle" size={32} color="green" />
         </View>
       </KeyboardAvoidingView>
     </View>

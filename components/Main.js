@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 // import { useSelector, useDispatch } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+// import { createStackNavigator } from "@react-navigation/stack";
+// import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // import { useRoute } from "../router";
 // import { authChangeStateUser } from "../redux/auth/authOperations";
 
-import RegistrationScreen from "../Screens/auth/RegistrationScreen";
-import LoginScreen from "../Screens/auth/LoginScreen";
-import ProfileScreen from "../Screens/main/ProfileScreen";
-import PostScreen from "../Screens/main/PostScreen";
-import CreatePostScreen from "../Screens/main/CreatePostsScreen";
+// import RegistrationScreen from "../Screens/auth/RegistrationScreen";
+// import LoginScreen from "../Screens/auth/LoginScreen";
+// import ProfileScreen from "../Screens/main/ProfileScreen";
+// import PostScreen from "../Screens/main/PostScreen";
+// import CreatePostScreen from "../Screens/main/CreatePostsScreen";
 
 import { useRoute } from "../router";
 
-const MainStack = createStackNavigator();
-const MainTab = createBottomTabNavigator();
+// const MainStack = createStackNavigator();
+// const MainTab = createBottomTabNavigator();
 
 // const useRoute = (isAuth) => {
 //   if (!isAuth) {

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
-import { Dimensions } from "react-native";
+import { Dimensions, View } from "react-native";
+// import { Provider } from "react-redux";
 
 // import { NavigationContainer } from "@react-navigation/native";
 // import { createStackNavigator } from "@react-navigation/stack";
@@ -16,11 +17,11 @@ import * as Font from "expo-font";
 // import LoginScreen from "../Screens/auth/LoginScreen";
 import Main from "./components/Main";
 
-const initialState = {
-  login: "",
-  email: "",
-  password: "",
-};
+// const initialState = {
+//   login: "",
+//   email: "",
+//   password: "",
+// };
 
 SplashScreen.preventAutoHideAsync();
 
@@ -58,16 +59,16 @@ export default function App() {
     return () => dem.remove();
   }, []);
 
-  const onLayoutRootView = useCallback(async () => {
-    if (isReady) {
-      await SplashScreen.hideAsync();
-      // await SplashScreen.show();
-    }
-  }, [isReady]);
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (isReady) {
+  //     await SplashScreen.hideAsync();
+  //     // await SplashScreen.show();
+  //   }
+  // }, [isReady]);
 
-  if (!isReady) {
-    return null;
-  }
+  // if (!isReady) {
+  //   return null;
+  // }
 
   // const keyboardHide = () => {
   //   setIsShownKeyboard(false);
@@ -76,9 +77,9 @@ export default function App() {
   // };
 
   return (
-    <>
-      <Main />
-    </>
+    // <Provider store={store}>
+    <Main />
+    // </Provider>
   );
 }
 
