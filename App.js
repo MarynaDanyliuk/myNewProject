@@ -75,8 +75,6 @@ export default function App() {
   //   Keyboard.dismiss();
   // };
 
-  // const MainStack = createStackNavigator();
-
   return (
     <>
       <Main />

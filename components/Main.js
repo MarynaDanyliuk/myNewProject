@@ -12,9 +12,38 @@ import ProfileScreen from "../Screens/main/ProfileScreen";
 import PostScreen from "../Screens/main/PostScreen";
 import CreatePostScreen from "../Screens/main/CreatePostsScreen";
 
+const MainStack = createStackNavigator();
+const MainTab = createBottomTabNavigator();
+
+const useRoute = (isAuth) => {
+  if (!isAuth) {
+    return (
+      <MainStack.Navigator>
+        <MainStack.Screen
+          options={{ headerShown: false }}
+          name="Registration"
+          component={RegistrationScreen}
+        />
+        <MainStack.Screen
+          options={{ headerShown: false }}
+          name="Login"
+          component={LoginScreen}
+        />
+      </MainStack.Navigator>
+    );
+  }
+  return (
+    <MainTab.Navigator>
+      <MainTab.Screen name="ProfileScreen" component={ProfileScreen} />
+      <MainTab.Screen name="PostScreen" component={PostScreen} />
+      <MainTab.Screen name="CreatePostScreen" component={CreatePostScreen} />
+    </MainTab.Navigator>
+  );
+};
+
 const Main = () => {
-  const MainStack = createStackNavigator();
-  const MainTab = createBottomTabNavigator();
+  const routing = useRoute(null);
+
   //   const { stateChange } = useSelector((state) => state.auth);
 
   //   const dispatch = useDispatch();
@@ -27,6 +56,7 @@ const Main = () => {
 
   return (
     <NavigationContainer>
+      {routing}
       {/* <MainStack.Navigator>
         <MainStack.Screen
           options={{ headerShown: false }}
@@ -39,11 +69,11 @@ const Main = () => {
           component={LoginScreen}
         />
       </MainStack.Navigator> */}
-      <MainTab.Navigator>
+      {/* <MainTab.Navigator>
         <MainTab.Screen name="ProfileScreen" component={ProfileScreen} />
         <MainTab.Screen name="PostScreen" component={PostScreen} />
         <MainTab.Screen name="CreatePostScreen" component={CreatePostScreen} />
-      </MainTab.Navigator>
+      </MainTab.Navigator> */}
     </NavigationContainer>
   );
 };
