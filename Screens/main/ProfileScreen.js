@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
-// import { EvilIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
 
 export default function ProfileScreen() {
   return (
@@ -25,19 +25,31 @@ export default function ProfileScreen() {
         <View style={styles.post_photo}></View>
         <View style={styles.post_data}>
           <Text style={styles.post_title}>Forest</Text>
-          {/* <Text>name@mail.com</Text> */}
+          <View style={styles.post_wrapper}>
+            <EvilIcons name="comment" size={32} color="grey" />
+            <Text style={styles.comment}>0</Text>
+            <View style={styles.location_wrapper}>
+              <EvilIcons name="location" size={32} color="grey" />
+              <Text style={styles.location}>Ivanofrankivsk</Text>
+            </View>
+          </View>
         </View>
       </View>
+      {/* <View style={styles.post}>
+        <View style={styles.post_photo}></View>
+        <View style={styles.post_data}>
+          <Text style={styles.post_title}>Forest</Text>
+          <View style={styles.post_wrapper}>
+            <EvilIcons name="comment" size={32} color="grey" />
+            <Text style={styles.comment}>0</Text>
+            <View style={styles.location_wrapper}>
+              <EvilIcons name="location" size={32} color="grey" />
+              <Text style={styles.location}>Ivanofrankivsk</Text>
+            </View>
+          </View>
+        </View>
+      </View> */}
     </View>
-    // <View style={styles.container_icon}>
-    //   <MaterialIcons
-    //     name="logout"
-    //     size={32}
-    //     color="gray"
-    //     // onPress={}
-    //     // style={{ marginBottom: 32 }}
-    //   />
-    // </View>
   );
 }
 
@@ -75,6 +87,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  post: {
+    marginBottom: 32,
+  },
   post_photo: {
     height: 240,
     backgroundColor: "#ffa500",
@@ -83,6 +98,35 @@ const styles = StyleSheet.create({
   },
   post_title: {
     marginBottom: 8,
+    fontFamily: "Montserrat-Regular",
+    fontSize: 16,
+    lineHeight: 18.75,
+  },
+  post_wrapper: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  location_wrapper: {
+    display: "flex",
+    flexDirection: "row",
+    marginLeft: "auto",
+  },
+  location: {
+    marginLeft: 8,
+    fontSize: 16,
+    lineHeight: 18.75,
+    textAlign: "center",
+    fontFamily: "Montserrat-Regular",
+    textDecorationLine: "underline",
+  },
+  comment: {
+    marginLeft: 8,
+    fontSize: 16,
+    lineHeight: 18.75,
+    textAlign: "center",
+    fontFamily: "Montserrat-Regular",
+    color: "grey",
   },
 });
 
