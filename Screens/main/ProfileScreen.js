@@ -1,45 +1,87 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 // import { EvilIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
 export default function ProfileScreen() {
   return (
-    <View style={styles.container_icon}>
-      <MaterialIcons
-        name="logout"
-        size={32}
-        color="gray"
-        // onPress={}
-        style={{ marginBottom: 32 }}
-      />
+    <View style={styles.container}>
+      <View style={styles.container_icon}>
+        <MaterialIcons
+          name="logout"
+          size={32}
+          color="gray"
+          // onPress={}
+        />
+      </View>
+      <View style={styles.user}>
+        <View style={styles.user_avatar}></View>
+        <View style={styles.user_data}>
+          <Text style={styles.user_name}>Name</Text>
+          <Text>name@mail.com</Text>
+        </View>
+      </View>
+      <View style={styles.post}>
+        <View style={styles.post_photo}></View>
+        <View style={styles.post_data}>
+          <Text style={styles.post_title}>Forest</Text>
+          {/* <Text>name@mail.com</Text> */}
+        </View>
+      </View>
     </View>
+    // <View style={styles.container_icon}>
+    //   <MaterialIcons
+    //     name="logout"
+    //     size={32}
+    //     color="gray"
+    //     // onPress={}
+    //     // style={{ marginBottom: 32 }}
+    //   />
+    // </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    marginHorizontal: 8,
+    marginHorizontal: 16,
   },
   container_icon: {
     flex: 1,
     alignItems: "flex-end",
-    marginHorizontal: 8,
-  },
-  postWrapper: {
+    maxHeight: 32,
     marginBottom: 32,
   },
-  photo: {
+  user: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    maxHeight: 60,
+    marginBottom: 32,
+  },
+  user_avatar: {
+    width: 60,
+    height: 60,
+    backgroundColor: "#ffa500",
+    borderRadius: 20,
+  },
+  user_data: {
+    marginLeft: 8,
+    fontFamily: "Montserrat-Regular",
+    fontSize: 16,
+    lineHeight: 18.75,
+  },
+  user_name: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  post_photo: {
     height: 240,
-    borderRadius: 8,
+    backgroundColor: "#ffa500",
+    borderRadius: 20,
     marginBottom: 8,
   },
-  name: {
-    fontSize: 16,
-    lineHeight: 19,
-    fontFamily: "roboto-regular",
+  post_title: {
     marginBottom: 8,
   },
 });

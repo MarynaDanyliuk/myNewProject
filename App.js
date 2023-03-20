@@ -28,6 +28,7 @@ SplashScreen.preventAutoHideAsync();
 const loadApplication = async () => {
   await Font.loadAsync({
     "Montserrat-Regular": require("./assets/fonts/Montserrat-Regular.ttf"),
+    "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
   });
 };
 

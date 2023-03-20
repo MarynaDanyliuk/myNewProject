@@ -4,16 +4,24 @@ import { View, Text, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 // import Ionicons from "@expo/vector-icons/Ionicons";
 
-export default function PostScreen() {
+export default function PostsScreen() {
   return (
-    <View style={styles.container_icon}>
-      <MaterialIcons
-        name="logout"
-        size={32}
-        color="gray"
-        // onPress={}
-        style={{ marginBottom: 32 }}
-      />
+    <View style={styles.container}>
+      <View style={styles.container_icon}>
+        <MaterialIcons
+          name="logout"
+          size={32}
+          color="gray"
+          // onPress={}
+        />
+      </View>
+      <View style={styles.user}>
+        <View style={styles.user_avatar}></View>
+        <View style={styles.user_data}>
+          <Text style={styles.user_name}>Name</Text>
+          <Text>name@mail.com</Text>
+        </View>
+      </View>
     </View>
   );
 }
@@ -21,27 +29,35 @@ export default function PostScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    marginHorizontal: 8,
+    marginHorizontal: 16,
   },
   container_icon: {
     flex: 1,
     alignItems: "flex-end",
-    marginHorizontal: 8,
-  },
-  postWrapper: {
+    maxHeight: 32,
     marginBottom: 32,
   },
-  photo: {
-    height: 240,
-    borderRadius: 8,
-    marginBottom: 8,
+  user: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    maxHeight: 60,
   },
-  name: {
+  user_avatar: {
+    width: 60,
+    height: 60,
+    backgroundColor: "#ffa500",
+    borderRadius: 20,
+  },
+  user_data: {
+    marginLeft: 8,
+    fontFamily: "Montserrat-Regular",
     fontSize: 16,
-    lineHeight: 19,
-    fontFamily: "roboto-regular",
-    marginBottom: 8,
+    lineHeight: 18.75,
+  },
+  user_name: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

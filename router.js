@@ -9,7 +9,7 @@ const MainTab = createBottomTabNavigator();
 import RegistrationScreen from "./Screens/auth/RegistrationScreen";
 import LoginScreen from "./Screens/auth/LoginScreen";
 import ProfileScreen from "./Screens/main/ProfileScreen";
-import PostScreen from "./Screens/main/PostScreen";
+import PostsScreen from "./Screens/main/PostsScreen";
 import CreatePostScreen from "./Screens/main/CreatePostsScreen";
 
 // ____ icons import_________
@@ -18,22 +18,22 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
 export const useRoute = (isAuth) => {
-  if (!isAuth) {
-    return (
-      <MainStack.Navigator>
-        <MainStack.Screen
-          options={{ headerShown: false }}
-          name="Registration"
-          component={RegistrationScreen}
-        />
-        <MainStack.Screen
-          options={{ headerShown: false }}
-          name="Login"
-          component={LoginScreen}
-        />
-      </MainStack.Navigator>
-    );
-  }
+  // if (!isAuth) {
+  //   return (
+  //     <MainStack.Navigator>
+  //       <MainStack.Screen
+  //         options={{ headerShown: false }}
+  //         name="Registration"
+  //         component={RegistrationScreen}
+  //       />
+  //       <MainStack.Screen
+  //         options={{ headerShown: false }}
+  //         name="Login"
+  //         component={LoginScreen}
+  //       />
+  //     </MainStack.Navigator>
+  //   );
+  // }
   return (
     <MainTab.Navigator
       screenOptions={{
@@ -63,8 +63,8 @@ export const useRoute = (isAuth) => {
             <AntDesign name="appstore-o" size={24} color="grey" />
           ),
         }}
-        name="PostScreen"
-        component={PostScreen}
+        name="PostsScreen"
+        component={PostsScreen}
       />
       <MainTab.Screen
         options={{

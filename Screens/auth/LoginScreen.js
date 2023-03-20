@@ -69,7 +69,7 @@ export default function LoginScreen({ navigation }) {
     return null;
   }
 
-  const keyboardHide = () => {
+  const keyboardHide = ({ navigation }) => {
     setIsShownKeyboard(false);
     setState(initialState);
     Keyboard.dismiss();
@@ -122,9 +122,13 @@ export default function LoginScreen({ navigation }) {
                 style={styles.button}
                 onPress={keyboardHide}
               >
-                <Text style={styles.button_title}>Зареєструватись</Text>
+                <Text
+                  style={styles.button_title}
+                  onPress={() => navigation.navigate("PostsScreen")}
+                >
+                  Увійти
+                </Text>
               </TouchableOpacity>
-              {/* <Text style={styles.link}>У вас уже є аккаунт? Увійти</Text> */}
               <TouchableOpacity
                 onPress={() => navigation.navigate("Registration")}
               >
