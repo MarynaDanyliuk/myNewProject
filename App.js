@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { StatusBar } from "expo-status-bar";
+import { LogBox } from "react-native";
+// import { NavigationContainer } from "@react-navigation/native";
+// import { createStackNavigator } from "@react-navigation/stack";
+// import { StatusBar } from "expo-status-bar";
 import { Dimensions, View } from "react-native";
 // import { Provider } from "react-redux";
 
@@ -24,6 +25,7 @@ import Main from "./components/Main";
 // };
 
 SplashScreen.preventAutoHideAsync();
+LogBox.ignoreAllLogs();
 
 const loadApplication = async () => {
   await Font.loadAsync({
@@ -60,16 +62,16 @@ export default function App() {
     return () => dem.remove();
   }, []);
 
-  // const onLayoutRootView = useCallback(async () => {
-  //   if (isReady) {
-  //     await SplashScreen.hideAsync();
-  //     // await SplashScreen.show();
-  //   }
-  // }, [isReady]);
+  const onLayoutRootView = useCallback(async () => {
+    if (isReady) {
+      await SplashScreen.hideAsync();
+      // await SplashScreen.show();
+    }
+  }, [isReady]);
 
-  // if (!isReady) {
-  //   return null;
-  // }
+  if (!isReady) {
+    return null;
+  }
 
   // const keyboardHide = () => {
   //   setIsShownKeyboard(false);

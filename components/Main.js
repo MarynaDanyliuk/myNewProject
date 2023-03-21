@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 // import { useSelector, useDispatch } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 // import { createStackNavigator } from "@react-navigation/stack";
@@ -13,6 +13,8 @@ import { NavigationContainer } from "@react-navigation/native";
 // import CreatePostScreen from "../Screens/main/CreatePostsScreen";
 
 import { useRoute } from "../router";
+import * as Font from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 
 // const MainStack = createStackNavigator();
 // const MainTab = createBottomTabNavigator();
@@ -45,6 +47,34 @@ import { useRoute } from "../router";
 
 const Main = () => {
   const routing = useRoute(null);
+
+  const [isReady, setIsReady] = useState(false);
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await Font.loadAsync({
+          "Montserrat-Regular": require("../assets/fonts/Montserrat-Regular.ttf"),
+          "Montserrat-Bold": require("../assets/fonts/Montserrat-Bold.ttf"),
+        });
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setIsReady(true);
+      }
+    }
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (isReady) {
+      await SplashScreen.hideAsync();
+      // await SplashScreen.show();
+    }
+  }, [isReady]);
+
+  if (!isReady) {
+    return null;
+  }
 
   //   const { stateChange } = useSelector((state) => state.auth);
 

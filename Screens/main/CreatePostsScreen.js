@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -6,20 +7,59 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableHighlight,
+  Image,
 } from "react-native";
+import { Feather } from "@expo/vector-icons";
 
-export default function CreatePostScreen() {
+import { Camera, CameraType } from "expo-camera";
+
+const initialState = {
+  login: "",
+  email: "",
+  password: "",
+};
+
+export default function CreatePostScreen({ navigation }) {
+  const [camera, setCamera] = useState(null);
+  const [photo, setPhoto] = useState("");
+  const [type, setType] = useState(CameraType.back);
+
+  const takePhoto = async () => {
+    if (!camera) return;
+    setType((current) =>
+      current === CameraType.back ? CameraType.front : CameraType.back
+    );
+    const photo = await camera.takePictureAsync();
+    setPhoto(photo.uri);
+    console.log(photo.uri);
+  };
+
+  const sendPhoto = () => {
+    navigation.navigate("PostsScreen", { photo });
+    console.log(navigation.navigate);
+    reset();
+  };
+
+  const reset = () => {
+    setPhoto(null);
+  };
+
   return (
-    // <View style={styles.container}>
-    //   <KeyboardAvoidingView
-    //     behavior={Platform.OS == "ios" ? "padding" : "height"}
-    //   >
-    //     <View>
-    //       <Text style={styles.screen_title}>Create Post Screen</Text>
-    //     </View>
     <View style={styles.container}>
+      <Camera style={styles.camera} type={type} ref={setCamera}>
+        {photo && (
+          <View style={styles.takePhotoContainer}>
+            <Image src={{ uri: photo }} style={{ width: 100, height: 100 }} />
+          </View>
+        )}
+        <TouchableOpacity onPress={takePhoto}>
+          <Feather name="camera" size={32} color="white" />
+        </TouchableOpacity>
+      </Camera>
       <TouchableOpacity style={styles.loadСontainer}>
-        <Text style={styles.loadText}>Загрузите фото</Text>
+        <Text style={styles.loadText} onPress={sendPhoto}>
+          Загрузите фото
+        </Text>
       </TouchableOpacity>
       <View style={styles.form}>
         <View style={{ marginBottom: 31 }}>
@@ -47,8 +87,6 @@ export default function CreatePostScreen() {
         </TouchableHighlight>
       </View>
     </View>
-    //   </KeyboardAvoidingView>
-    // </View>
   );
 }
 
@@ -63,16 +101,7 @@ const styles = StyleSheet.create({
     marginTop: 32,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "rgba(246, 246, 246, 1)",
-  },
-  cameraIcon: {
-    position: "absolute",
-    justifyContent: "center",
-    alignItems: "center",
-    width: 60,
-    height: 60,
-    borderRadius: 50,
-    backgroundColor: "white",
+    backgroundColor: "#BDBDBD",
   },
   takePhotoContainer: {
     position: "absolute",
@@ -88,7 +117,7 @@ const styles = StyleSheet.create({
   },
   loadText: {
     fontSize: 16,
-    color: "#BDBDBD",
+    color: "grey",
   },
   form: {
     marginTop: 32,
@@ -98,6 +127,8 @@ const styles = StyleSheet.create({
     height: 50,
     borderBottomWidth: 1,
     borderBottomColor: "#E8E8E8",
+    // fontFamily: "Montserrat-Regular",
+    fontSize: 16,
   },
   submitBtn: {
     backgroundColor: "#BDBDBD",
@@ -105,11 +136,20 @@ const styles = StyleSheet.create({
     height: 51,
     alignItems: "center",
     justifyContent: "center",
+    // fontFamily: "Montserrat-Regular",
+    fontSize: 16,
   },
   btnText: {
     fontSize: 16,
     lineHeight: 19,
-    // fontFamily: "roboto-regular",
+    // fontFamily: "Montserrat-Regular",
     color: "#FFFFFF",
   },
 });
+
+// ______________________________________
+// function toggleCameraType() {
+//   setType((current) =>
+//     current === CameraType.back ? CameraType.front : CameraType.back
+//   );
+// }

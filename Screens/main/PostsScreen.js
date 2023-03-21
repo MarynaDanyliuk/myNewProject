@@ -1,10 +1,21 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
-// import { EvilIcons } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 // import Ionicons from "@expo/vector-icons/Ionicons";
 
-export default function PostsScreen() {
+export default function PostsScreen({ route }) {
+  const [posts, setPosts] = useState([]);
+
+  console.log(route.params);
+
+  useEffect(() => {
+    if (route.params) {
+      setPosts((prevState) => [...prevState, route.params]);
+    }
+  }, [route.params]);
+  console.log(posts);
   return (
     <View style={styles.container}>
       <View style={styles.container_icon}>
@@ -20,6 +31,20 @@ export default function PostsScreen() {
         <View style={styles.user_data}>
           <Text style={styles.user_name}>Name</Text>
           <Text>name@mail.com</Text>
+        </View>
+      </View>
+      <View style={styles.post}>
+        <View style={styles.post_photo}></View>
+        <View style={styles.post_data}>
+          <Text style={styles.post_title}>Forest</Text>
+          <View style={styles.post_wrapper}>
+            <EvilIcons name="comment" size={32} color="grey" />
+            <Text style={styles.comment}>0</Text>
+            <View style={styles.location_wrapper}>
+              <EvilIcons name="location" size={32} color="grey" />
+              <Text style={styles.location}>Ivanofrankivsk</Text>
+            </View>
+          </View>
         </View>
       </View>
     </View>
@@ -42,6 +67,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     maxHeight: 60,
+    marginBottom: 32,
   },
   user_avatar: {
     width: 60,
@@ -51,13 +77,54 @@ const styles = StyleSheet.create({
   },
   user_data: {
     marginLeft: 8,
-    fontFamily: "Montserrat-Regular",
+    // fontFamily: "Montserrat-Regular",
     fontSize: 16,
     lineHeight: 18.75,
   },
   user_name: {
     fontSize: 16,
     fontWeight: "bold",
+  },
+  post: {
+    marginBottom: 32,
+  },
+  post_photo: {
+    height: 240,
+    backgroundColor: "#ffa500",
+    borderRadius: 20,
+    marginBottom: 8,
+  },
+  post_title: {
+    marginBottom: 8,
+    // fontFamily: "Montserrat-Regular",
+    fontSize: 16,
+    lineHeight: 18.75,
+  },
+  post_wrapper: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  location_wrapper: {
+    display: "flex",
+    flexDirection: "row",
+    marginLeft: "auto",
+  },
+  location: {
+    marginLeft: 8,
+    fontSize: 16,
+    lineHeight: 18.75,
+    textAlign: "center",
+    // fontFamily: "Montserrat-Regular",
+    textDecorationLine: "underline",
+  },
+  comment: {
+    marginLeft: 8,
+    fontSize: 16,
+    lineHeight: 18.75,
+    textAlign: "center",
+    // fontFamily: "Montserrat-Regular",
+    color: "grey",
   },
 });
 

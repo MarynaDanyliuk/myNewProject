@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   screen_title: {
-    fontFamily: "Montserrat-Regular",
+    // fontFamily: "Montserrat-Regular",
     color: "#212121",
     fontSize: "30px",
     lineHeight: "35.16px",
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginBottom: 16,
     backgroundColor: "#F6F6F6",
-    fontFamily: "Montserrat-Regular",
+    // fontFamily: "Montserrat-Regular",
     color: "#212121",
     fontSize: 16,
     lineHeight: 18.75,
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 18.75,
     textAlign: "center",
-    fontFamily: "Montserrat-Regular",
+    // fontFamily: "Montserrat-Regular",
     color: "#FFFFFF",
   },
   wrapper_avatar: {
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 18.75,
     textAlign: "center",
-    fontFamily: "Montserrat-Regular",
+    // fontFamily: "Montserrat-Regular",
     textDecorationLine: "underline",
   },
 });
