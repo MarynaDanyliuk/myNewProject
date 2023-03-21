@@ -1,8 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { FlatList } from "react-native-gesture-handler";
 // import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function PostsScreen({ route }) {
@@ -33,20 +34,27 @@ export default function PostsScreen({ route }) {
           <Text>name@mail.com</Text>
         </View>
       </View>
-      <View style={styles.post}>
-        <View style={styles.post_photo}></View>
-        <View style={styles.post_data}>
-          <Text style={styles.post_title}>Forest</Text>
-          <View style={styles.post_wrapper}>
-            <EvilIcons name="comment" size={32} color="grey" />
-            <Text style={styles.comment}>0</Text>
-            <View style={styles.location_wrapper}>
-              <EvilIcons name="location" size={32} color="grey" />
-              <Text style={styles.location}>Ivanofrankivsk</Text>
+      <FlatList
+        data={posts}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.post}>
+            <Image src={{ uri: item.photo }} style={styles.post_photo} />
+            {/* <View style={styles.post_photo}></View> */}
+            <View style={styles.post_data}>
+              <Text style={styles.post_title}>Forest</Text>
+              <View style={styles.post_wrapper}>
+                <EvilIcons name="comment" size={32} color="grey" />
+                <Text style={styles.comment}>0</Text>
+                <View style={styles.location_wrapper}>
+                  <EvilIcons name="location" size={32} color="grey" />
+                  <Text style={styles.location}>Ivanofrankivsk</Text>
+                </View>
+              </View>
             </View>
           </View>
-        </View>
-      </View>
+        )}
+      />
     </View>
   );
 }
@@ -63,7 +71,6 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   user: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     maxHeight: 60,
