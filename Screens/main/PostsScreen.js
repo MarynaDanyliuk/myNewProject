@@ -40,7 +40,6 @@ export default function PostsScreen({ route }) {
         renderItem={({ item }) => (
           <View style={styles.post}>
             <Image source={{ uri: item.photo }} style={styles.post_photo} />
-            {/* <View style={styles.post_photo}></View> */}
             <View style={styles.post_data}>
               <Text style={styles.post_title}>Forest</Text>
               <View style={styles.post_wrapper}>

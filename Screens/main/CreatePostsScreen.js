@@ -24,7 +24,10 @@ export default function CreatePostScreen({ navigation }) {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState("");
   const [type, setType] = useState(CameraType.back);
+
   const [location, setLocation] = useState(null);
+  const [locationName, setLocationName] = useState("");
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -32,12 +35,19 @@ export default function CreatePostScreen({ navigation }) {
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
+      } else {
+        console.log(status);
+        setStartCamera(true);
       }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
     })();
   }, []);
+
+  // locationName = "Waiting..";
+  // if (errorMsg) {
+  //   locationName = errorMsg;
+  // } else if (location) {
+  //   locationName = JSON.stringify(location);
+  // }
 
   const takePhoto = async () => {
     if (!camera) return;
@@ -47,7 +57,10 @@ export default function CreatePostScreen({ navigation }) {
     const photo = await camera.takePictureAsync();
     const location = await Location.getCurrentPositionAsync();
     console.log(location);
+    console.log("latitude", location.coords.latitude);
+    console.log("longitude", location.coords.longitude);
     setPhoto(photo.uri);
+    setLocation(location);
     console.log(photo.uri);
   };
 
@@ -94,8 +107,8 @@ export default function CreatePostScreen({ navigation }) {
           <TextInput
             style={styles.input}
             placeholder="Местность"
-            // value={}
-            // onChangeText={}
+            value={locationName}
+            onChangeText={setLocationName}
           />
         </View>
         <TouchableHighlight
