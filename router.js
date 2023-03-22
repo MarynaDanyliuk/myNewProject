@@ -11,6 +11,7 @@ import LoginScreen from "./Screens/auth/LoginScreen";
 import ProfileScreen from "./Screens/main/ProfileScreen";
 import PostsScreen from "./Screens/main/PostsScreen";
 import CreatePostScreen from "./Screens/main/CreatePostsScreen";
+import MapScreen from "./Screens/nested/MapScreen";
 
 // ____ icons import_________
 import { AntDesign } from "@expo/vector-icons";
@@ -74,6 +75,15 @@ export const useRoute = (isAuth) => {
         }}
         name="CreatePostScreen"
         component={CreatePostScreen}
+      />
+      <MainTab.Screen
+        options={{
+          tabBarIcon: ({ focused, size, color }) => (
+            <Ionicons name="ios-create-outline" size={24} color="grey" />
+          ),
+        }}
+        name="MapScreen"
+        component={MapScreen}
       />
     </MainTab.Navigator>
   );
