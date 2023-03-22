@@ -65,7 +65,7 @@ export default function CreatePostScreen({ navigation }) {
   };
 
   const sendPhoto = () => {
-    navigation.navigate("PostsScreen", { photo });
+    navigation.navigate("Home", { photo });
     console.log(navigation);
     reset();
   };

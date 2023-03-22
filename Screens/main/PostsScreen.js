@@ -6,17 +6,15 @@ import Home from "../nestedScreens/Home";
 import CommentsScreen from "../nestedScreens/CommentsScreen";
 import MapScreen from "../nestedScreens/MapScreen";
 
-// import { useState, useEffect } from "react";
-// import { EvilIcons } from "@expo/vector-icons";
-// import { MaterialIcons } from "@expo/vector-icons";
-// import { FlatList } from "react-native-gesture-handler";
-// // import Ionicons from "@expo/vector-icons/Ionicons";
-
 const NestedScreen = createStackNavigator();
 
-export default function PostsScreen() {
+export default function PostsScreen({ navigation }) {
   <NestedScreen.Navigator>
-    <NestedScreen.Screen name="Home" component={Home} />
+    <NestedScreen.Screen
+      name="Home"
+      component={Home}
+      options={{ headerShown: false }}
+    />
     <NestedScreen.Screen name="CommentsScreen" component={CommentsScreen} />
     <NestedScreen.Screen name="MapScreen" component={MapScreen} />
   </NestedScreen.Navigator>;

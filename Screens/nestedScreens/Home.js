@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Button,
+} from "react-native";
 
 import { EvilIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -11,7 +18,7 @@ import { FlatList } from "react-native-gesture-handler";
 
 // import Ionicons from "@expo/vector-icons/Ionicons";
 
-export default function Home({ route }) {
+export default function Home({ route, navigation }) {
   const [posts, setPosts] = useState([]);
 
   console.log(route.params);
@@ -56,12 +63,20 @@ export default function Home({ route }) {
                 </View>
               </View>
             </View>
+            <Button
+              title="go to map"
+              onPress={() => navigation.navigate("Map")}
+            />
+            <Button
+              title="go to Comments"
+              onPress={() => navigation.navigate("Comments")}
+            />
           </View>
         )}
       />
-      <TouchableOpacity onPress={() => navigation.navigate("MapScreen")}>
+      {/* <TouchableOpacity onPress={() => navigation.navigate("MapScreen")}>
         <Text style={styles.link}>Map</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 }

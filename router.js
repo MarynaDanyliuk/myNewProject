@@ -11,7 +11,11 @@ import LoginScreen from "./Screens/auth/LoginScreen";
 import ProfileScreen from "./Screens/main/ProfileScreen";
 import PostsScreen from "./Screens/main/PostsScreen";
 import CreatePostScreen from "./Screens/main/CreatePostsScreen";
-import MapScreen from "./Screens/nested/MapScreen";
+import Home from "./Screens/nestedScreens/Home";
+
+// import Home from "../nestedScreens/Home";
+// import CommentsScreen from "../nestedScreens/CommentsScreen";
+// import MapScreen from "../nestedScreens/MapScreen";
 
 // ____ icons import_________
 import { AntDesign } from "@expo/vector-icons";
@@ -76,7 +80,7 @@ export const useRoute = (isAuth) => {
         name="CreatePostScreen"
         component={CreatePostScreen}
       />
-      <MainTab.Screen
+      {/* <MainTab.Screen
         options={{
           tabBarIcon: ({ focused, size, color }) => (
             <Ionicons name="ios-create-outline" size={24} color="grey" />
@@ -84,6 +88,15 @@ export const useRoute = (isAuth) => {
         }}
         name="MapScreen"
         component={MapScreen}
+      /> */}
+      <MainTab.Screen
+        options={{
+          tabBarIcon: ({ focused, size, color }) => (
+            <Ionicons name="ios-create-outline" size={24} color="grey" />
+          ),
+        }}
+        name="Home"
+        component={Home}
       />
     </MainTab.Navigator>
   );
