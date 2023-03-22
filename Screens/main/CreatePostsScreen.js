@@ -14,12 +14,6 @@ import { Feather } from "@expo/vector-icons";
 import { Camera, CameraType } from "expo-camera";
 import * as Location from "expo-location";
 
-// const initialState = {
-//   login: "",
-//   email: "",
-//   password: "",
-// };
-
 export default function CreatePostScreen({ navigation }) {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState("");
@@ -65,7 +59,7 @@ export default function CreatePostScreen({ navigation }) {
   };
 
   const sendPhoto = () => {
-    navigation.navigate("Home", { photo });
+    navigation.navigate("PostsScreen", { screen: "Home", params: { photo } });
     console.log(navigation);
     reset();
   };

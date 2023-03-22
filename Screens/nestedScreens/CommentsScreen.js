@@ -12,18 +12,14 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 
 export default function CommentsScreen({ route }) {
-  // const { postId } = route.params;
-  // const photo = route.params.photo;
+  const [photo, setPhoto] = useState("");
   const [comment, setComment] = useState("");
-  const [allComments, setAllComments] = useState([]);
-  const { nickname } = useSelector((state) => state.auth);
-
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.container}>
         <Image source={{ uri: photo }} style={styles.image} />
         <FlatList
-          data={allComments}
+          // data={allComments}
           renderItem={({ item }) => (
             <View>
               <Text style={styles.author}>{item.nickname}</Text>
@@ -42,7 +38,10 @@ export default function CommentsScreen({ route }) {
           value={comment}
           // onChangeText={}
         />
-        <TouchableOpacity style={styles.button} onPress={addComment}>
+        <TouchableOpacity
+          style={styles.button}
+          // onPress={addComment}
+        >
           <AntDesign name="arrowup" size={24} color="white" />
         </TouchableOpacity>
       </View>

@@ -23,22 +23,22 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
 export const useRoute = (isAuth) => {
-  if (!isAuth) {
-    return (
-      <MainStack.Navigator>
-        <MainStack.Screen
-          options={{ headerShown: false }}
-          name="Registration"
-          component={RegistrationScreen}
-        />
-        <MainStack.Screen
-          options={{ headerShown: false }}
-          name="Login"
-          component={LoginScreen}
-        />
-      </MainStack.Navigator>
-    );
-  }
+  // if (!isAuth) {
+  //   return (
+  //     <MainStack.Navigator>
+  //       <MainStack.Screen
+  //         options={{ headerShown: false }}
+  //         name="Registration"
+  //         component={RegistrationScreen}
+  //       />
+  //       <MainStack.Screen
+  //         options={{ headerShown: false }}
+  //         name="Login"
+  //         component={LoginScreen}
+  //       />
+  //     </MainStack.Navigator>
+  //   );
+  // }
   return (
     <MainTab.Navigator
       screenOptions={{

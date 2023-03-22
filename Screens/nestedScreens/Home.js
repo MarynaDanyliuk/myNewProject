@@ -65,11 +65,11 @@ export default function Home({ route, navigation }) {
             </View>
             <Button
               title="go to map"
-              onPress={() => navigation.navigate("Map")}
+              onPress={() => navigation.navigate("MapScreen")}
             />
             <Button
               title="go to Comments"
-              onPress={() => navigation.navigate("Comments")}
+              onPress={() => navigation.navigate("CommentsScreen")}
             />
           </View>
         )}
