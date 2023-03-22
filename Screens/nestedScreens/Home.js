@@ -74,9 +74,6 @@ export default function Home({ route, navigation }) {
           </View>
         )}
       />
-      {/* <TouchableOpacity onPress={() => navigation.navigate("MapScreen")}>
-        <Text style={styles.link}>Map</Text>
-      </TouchableOpacity> */}
     </View>
   );
 }

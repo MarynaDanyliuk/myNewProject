@@ -8,16 +8,18 @@ import MapScreen from "../nestedScreens/MapScreen";
 
 const NestedScreen = createStackNavigator();
 
-export default function PostsScreen({ navigation }) {
-  <NestedScreen.Navigator>
-    <NestedScreen.Screen
-      name="Home"
-      component={Home}
-      options={{ headerShown: false }}
-    />
-    <NestedScreen.Screen name="CommentsScreen" component={CommentsScreen} />
-    <NestedScreen.Screen name="MapScreen" component={MapScreen} />
-  </NestedScreen.Navigator>;
+export default function PostsScreen() {
+  return (
+    <NestedScreen.Navigator>
+      <NestedScreen.Screen
+        name="Home"
+        component={Home}
+        options={{ headerShown: false }}
+      />
+      <NestedScreen.Screen name="CommentsScreen" component={CommentsScreen} />
+      <NestedScreen.Screen name="MapScreen" component={MapScreen} />
+    </NestedScreen.Navigator>
+  );
 }
 
 // export default function PostsScreen({ route }) {

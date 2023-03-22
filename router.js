@@ -89,7 +89,7 @@ export const useRoute = (isAuth) => {
         name="MapScreen"
         component={MapScreen}
       /> */}
-      <MainTab.Screen
+      {/* <MainTab.Screen
         options={{
           tabBarIcon: ({ focused, size, color }) => (
             <Ionicons name="ios-create-outline" size={24} color="grey" />
@@ -97,7 +97,7 @@ export const useRoute = (isAuth) => {
         }}
         name="Home"
         component={Home}
-      />
+      /> */}
     </MainTab.Navigator>
   );
 };
