@@ -23,22 +23,22 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
 export const useRoute = (isAuth) => {
-  // if (!isAuth) {
-  //   return (
-  //     <MainStack.Navigator>
-  //       <MainStack.Screen
-  //         options={{ headerShown: false }}
-  //         name="Registration"
-  //         component={RegistrationScreen}
-  //       />
-  //       <MainStack.Screen
-  //         options={{ headerShown: false }}
-  //         name="Login"
-  //         component={LoginScreen}
-  //       />
-  //     </MainStack.Navigator>
-  //   );
-  // }
+  if (!isAuth) {
+    return (
+      <MainStack.Navigator>
+        <MainStack.Screen
+          options={{ headerShown: false }}
+          name="Registration"
+          component={RegistrationScreen}
+        />
+        <MainStack.Screen
+          options={{ headerShown: false }}
+          name="Login"
+          component={LoginScreen}
+        />
+      </MainStack.Navigator>
+    );
+  }
   return (
     <MainTab.Navigator
       screenOptions={{
@@ -80,37 +80,6 @@ export const useRoute = (isAuth) => {
         name="CreatePostScreen"
         component={CreatePostScreen}
       />
-      {/* <MainTab.Screen
-        options={{
-          tabBarIcon: ({ focused, size, color }) => (
-            <Ionicons name="ios-create-outline" size={24} color="grey" />
-          ),
-        }}
-        name="MapScreen"
-        component={MapScreen}
-      /> */}
-      {/* <MainTab.Screen
-        options={{
-          tabBarIcon: ({ focused, size, color }) => (
-            <Ionicons name="ios-create-outline" size={24} color="grey" />
-          ),
-        }}
-        name="Home"
-        component={Home}
-      /> */}
     </MainTab.Navigator>
   );
 };
-
-{
-  /* <MainStack.Screen
-          options={{ headerShown: false }}
-          name="CreatePostScreen"
-          component={CreatePostScreen}
-        />
-        <MainStack.Screen
-          options={{ headerShown: false }}
-          name="PostsScreen"
-          component={PostsScreen}
-        /> */
-}
