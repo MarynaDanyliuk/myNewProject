@@ -42,7 +42,7 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 16,
+    // marginHorizontal: 16,
   },
   screen_title: {
     // fontFamily: "Montserrat-Regular",
@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
   // },
   post: {
     marginBottom: 32,
+    marginHorizontal: 16,
   },
   post_photo: {
     height: 240,

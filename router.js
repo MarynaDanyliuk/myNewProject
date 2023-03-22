@@ -31,16 +31,6 @@ export const useRoute = (isAuth) => {
   //         name="Login"
   //         component={LoginScreen}
   //       />
-  //       <MainStack.Screen
-  //         options={{ headerShown: false }}
-  //         name="CreatePostScreen"
-  //         component={CreatePostScreen}
-  //       />
-  //       <MainStack.Screen
-  //         options={{ headerShown: false }}
-  //         name="PostsScreen"
-  //         component={PostsScreen}
-  //       />
   //     </MainStack.Navigator>
   //   );
   // }
@@ -88,3 +78,16 @@ export const useRoute = (isAuth) => {
     </MainTab.Navigator>
   );
 };
+
+{
+  /* <MainStack.Screen
+          options={{ headerShown: false }}
+          name="CreatePostScreen"
+          component={CreatePostScreen}
+        />
+        <MainStack.Screen
+          options={{ headerShown: false }}
+          name="PostsScreen"
+          component={PostsScreen}
+        /> */
+}

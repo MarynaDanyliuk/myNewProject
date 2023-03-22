@@ -39,7 +39,7 @@ export default function PostsScreen({ route }) {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={styles.post}>
-            <Image src={{ uri: item.photo }} style={styles.post_photo} />
+            <Image source={{ uri: item.photo }} style={styles.post_photo} />
             {/* <View style={styles.post_photo}></View> */}
             <View style={styles.post_data}>
               <Text style={styles.post_title}>Forest</Text>

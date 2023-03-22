@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -12,17 +12,32 @@ import {
 import { Feather } from "@expo/vector-icons";
 
 import { Camera, CameraType } from "expo-camera";
+import * as Location from "expo-location";
 
-const initialState = {
-  login: "",
-  email: "",
-  password: "",
-};
+// const initialState = {
+//   login: "",
+//   email: "",
+//   password: "",
+// };
 
 export default function CreatePostScreen({ navigation }) {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState("");
   const [type, setType] = useState(CameraType.back);
+  const [location, setLocation] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
 
   const takePhoto = async () => {
     if (!camera) return;
@@ -30,13 +45,15 @@ export default function CreatePostScreen({ navigation }) {
       current === CameraType.back ? CameraType.front : CameraType.back
     );
     const photo = await camera.takePictureAsync();
+    const location = await Location.getCurrentPositionAsync();
+    console.log(location);
     setPhoto(photo.uri);
     console.log(photo.uri);
   };
 
   const sendPhoto = () => {
     navigation.navigate("PostsScreen", { photo });
-    console.log(navigation.navigate);
+    console.log(navigation);
     reset();
   };
 
@@ -49,7 +66,10 @@ export default function CreatePostScreen({ navigation }) {
       <Camera style={styles.camera} type={type} ref={setCamera}>
         {photo && (
           <View style={styles.takePhotoContainer}>
-            <Image src={{ uri: photo }} style={{ width: 100, height: 100 }} />
+            <Image
+              source={{ uri: photo }}
+              style={{ width: 100, height: 100 }}
+            />
           </View>
         )}
         <TouchableOpacity onPress={takePhoto}>
