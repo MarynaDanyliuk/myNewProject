@@ -27,12 +27,12 @@ import Main from "./components/Main";
 SplashScreen.preventAutoHideAsync();
 LogBox.ignoreAllLogs();
 
-const loadApplication = async () => {
-  await Font.loadAsync({
-    "Montserrat-Regular": require("./assets/fonts/Montserrat-Regular.ttf"),
-    "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
-  });
-};
+// const loadApplication = async () => {
+//   await Font.loadAsync({
+//     "Montserrat-Regular": require("./assets/fonts/Montserrat-Regular.ttf"),
+//     "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
+//   });
+// };
 
 export default function App() {
   // const [isShownKeyboard, setIsShownKeyboard] = useState(false);
@@ -42,7 +42,7 @@ export default function App() {
   useEffect(() => {
     async function prepare() {
       try {
-        await loadApplication();
+        // await loadApplication();
       } catch (e) {
         console.warn(e);
       } finally {

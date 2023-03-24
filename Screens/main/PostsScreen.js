@@ -14,7 +14,7 @@ export default function PostsScreen() {
       <NestedScreen.Screen
         name="Home"
         component={Home}
-        // options={{ headerShown: false }}
+        options={{ headerShown: false }}
       />
       <NestedScreen.Screen name="CommentsScreen" component={CommentsScreen} />
       <NestedScreen.Screen name="MapScreen" component={MapScreen} />

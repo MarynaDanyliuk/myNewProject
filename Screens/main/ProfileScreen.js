@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Text, ImageBackground } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+// import { MaterialIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
 export default function ProfileScreen() {
@@ -42,10 +42,9 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginHorizontal: 16,
   },
   screen_title: {
-    // fontFamily: "Montserrat-Regular",
+    fontFamily: "Montserrat-Regular",
     color: "#212121",
     fontSize: "30px",
     lineHeight: "35.16px",
@@ -76,35 +75,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     top: -60,
   },
-  // container_icon: {
-  //   flex: 1,
-  //   alignItems: "flex-end",
-  //   maxHeight: 32,
-  //   marginBottom: 32,
-  // },
-  // user: {
-  //   flex: 1,
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   maxHeight: 60,
-  //   marginBottom: 32,
-  // },
-  // user_avatar: {
-  //   width: 60,
-  //   height: 60,
-  //   backgroundColor: "#ffa500",
-  //   borderRadius: 20,
-  // },
-  // user_data: {
-  //   marginLeft: 8,
-  //   // fontFamily: "Montserrat-Regular",
-  //   fontSize: 16,
-  //   lineHeight: 18.75,
-  // },
-  // user_name: {
-  //   fontSize: 16,
-  //   fontWeight: "bold",
-  // },
   post: {
     marginBottom: 32,
     marginHorizontal: 16,
@@ -117,7 +87,7 @@ const styles = StyleSheet.create({
   },
   post_title: {
     marginBottom: 8,
-    // fontFamily: "Montserrat-Regular",
+    fontFamily: "Montserrat-Regular",
     fontSize: 16,
     lineHeight: 18.75,
   },
@@ -136,7 +106,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 18.75,
     textAlign: "center",
-    // fontFamily: "Montserrat-Regular",
+    fontFamily: "Montserrat-Regular",
     textDecorationLine: "underline",
   },
   comment: {
@@ -144,52 +114,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 18.75,
     textAlign: "center",
-    // fontFamily: "Montserrat-Regular",
+    fontFamily: "Montserrat-Regular",
     color: "grey",
   },
 });
-
-//  <View style={styles.container}>
-//    <FlatList
-//      // data={userPosts}
-//      // keyExtractor={(_, index) => index.toString()}
-//      renderItem={({ item }) => (
-//        <View style={styles.postWrapper}>
-//          {/* <Image source={{ uri: item.photo }} style={styles.photo} />
-//           <Text style={styles.name}>{item.comment}</Text> */}
-//          <View style={{ flex: 1, flexDirection: "row" }}>
-//            <View>
-//              <EvilIcons
-//                // onPress={() =>
-//                //   navigation.navigate("Comments", {
-//                //     postId: item.id,
-//                //     photo: item.photo,
-//                //   })
-//                // }
-//                name="comment"
-//                size={32}
-//                color="#FF6C00"
-//              />
-//            </View>
-//            <View
-//              style={{
-//                flex: 1,
-//                flexDirection: "row",
-//                justifyContent: "flex-end",
-//              }}
-//            >
-//              <EvilIcons
-//                name="location"
-//                size={32}
-//                color="#FF6C00"
-//                // onPress={() =>
-//                //   navigation.navigate("Map", { location: item.location })
-//                // }
-//              />
-//              {/* <Text>{item.locationName}</Text> */}
-//            </View>
-//          </View>
-//        </View>
-//      )}
-//    />
-//  </View>;

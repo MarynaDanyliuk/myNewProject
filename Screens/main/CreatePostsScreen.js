@@ -20,28 +20,22 @@ export default function CreatePostScreen({ navigation }) {
   const [type, setType] = useState(CameraType.back);
 
   const [location, setLocation] = useState(null);
-  const [locationName, setLocationName] = useState("");
+  const [locationName, setLocationName] = useState("Waiting..");
   const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
+      const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
       } else {
         console.log(status);
         setStartCamera(true);
+        setLocationName(status);
       }
     })();
   }, []);
-
-  // locationName = "Waiting..";
-  // if (errorMsg) {
-  //   locationName = errorMsg;
-  // } else if (location) {
-  //   locationName = JSON.stringify(location);
-  // }
 
   const takePhoto = async () => {
     if (!camera) return;
@@ -154,7 +148,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderBottomWidth: 1,
     borderBottomColor: "#E8E8E8",
-    // fontFamily: "Montserrat-Regular",
+    fontFamily: "Montserrat-Regular",
     fontSize: 16,
   },
   submitBtn: {
@@ -163,13 +157,13 @@ const styles = StyleSheet.create({
     height: 51,
     alignItems: "center",
     justifyContent: "center",
-    // fontFamily: "Montserrat-Regular",
+    fontFamily: "Montserrat-Regular",
     fontSize: 16,
   },
   btnText: {
     fontSize: 16,
     lineHeight: 19,
-    // fontFamily: "Montserrat-Regular",
+    fontFamily: "Montserrat-Regular",
     color: "#FFFFFF",
   },
 });

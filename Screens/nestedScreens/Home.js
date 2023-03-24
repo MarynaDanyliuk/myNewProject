@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   user_data: {
     marginLeft: 8,
-    // fontFamily: "Montserrat-Regular",
+    fontFamily: "Montserrat-Regular",
     fontSize: 16,
     lineHeight: 18.75,
   },
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   post_title: {
     marginBottom: 8,
-    // fontFamily: "Montserrat-Regular",
+    fontFamily: "Montserrat-Regular",
     fontSize: 16,
     lineHeight: 18.75,
   },
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 18.75,
     textAlign: "center",
-    // fontFamily: "Montserrat-Regular",
+    fontFamily: "Montserrat-Regular",
     textDecorationLine: "underline",
   },
   comment: {
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 18.75,
     textAlign: "center",
-    // fontFamily: "Montserrat-Regular",
+    fontFamily: "Montserrat-Regular",
     color: "grey",
   },
 });
