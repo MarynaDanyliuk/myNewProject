@@ -19,8 +19,11 @@ import * as Font from "expo-font";
 
 import * as SplashScreen from "expo-splash-screen";
 
+import { useDispatch } from "react-redux";
+
+import { authSignInUser } from "../../redux/auth/authOperations";
+
 const initialState = {
-  login: "",
   email: "",
   password: "",
 };
@@ -50,6 +53,8 @@ export default function LoginScreen({ navigation }) {
     prepare();
   });
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const onChange = () => {
       const width = Dimensions.get("window").width;
@@ -68,6 +73,13 @@ export default function LoginScreen({ navigation }) {
   if (!isReady) {
     return null;
   }
+
+  const handleSubmit = () => {
+    setIsShownKeyboard(false);
+    Keyboard.dismiss();
+    setState(initialState);
+    dispatch(authSignInUser(state));
+  };
 
   const keyboardHide = ({ navigation }) => {
     setIsShownKeyboard(false);
@@ -120,7 +132,7 @@ export default function LoginScreen({ navigation }) {
               <TouchableOpacity
                 activeOpacity={0.7}
                 style={styles.button}
-                onPress={keyboardHide}
+                onPress={handleSubmit}
               >
                 <Text
                   style={styles.button_title}

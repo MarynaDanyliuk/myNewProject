@@ -14,6 +14,9 @@ import {
   Dimensions,
 } from "react-native";
 
+import { useDispatch } from "react-redux";
+import { authSignUpUser } from "../../redux/auth/authOperations";
+
 import * as Font from "expo-font";
 
 import * as SplashScreen from "expo-splash-screen";
@@ -34,6 +37,13 @@ export default function RegistrationScreen({ navigation }) {
   const [isShownKeyboard, setIsShownKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
   const [isReady, setIsReady] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const [dimensions, setDimensions] = useState(
+    Dimensions.get("window").width - 16 * 2
+  );
+
   useEffect(() => {
     async function prepare() {
       try {
@@ -56,6 +66,18 @@ export default function RegistrationScreen({ navigation }) {
     const dem = Dimensions.addEventListener("change", onChange);
     return () => dem.remove();
   }, []);
+
+  const hangleSubmit = () => {
+    setIsShownKeyboard(false);
+    Keyboard.dismiss();
+    setState(initialState);
+    dispatch(authSignUpUser(state));
+  };
+
+  // const onClose = () => {
+  //   Keyboard.dismiss();
+  //   setIsShownKeyboard(false);
+  // };
 
   const onLayoutRootView = useCallback(async () => {
     if (isReady) {
@@ -132,7 +154,8 @@ export default function RegistrationScreen({ navigation }) {
               <TouchableOpacity
                 activeOpacity={0.7}
                 style={styles.button}
-                onPress={keyboardHide}
+                // onPress={keyboardHide}
+                onPress={hangleSubmit}
               >
                 <Text style={styles.button_title}>Зареєструватись</Text>
               </TouchableOpacity>
