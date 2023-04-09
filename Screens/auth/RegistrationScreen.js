@@ -70,14 +70,9 @@ export default function RegistrationScreen({ navigation }) {
   const hangleSubmit = () => {
     setIsShownKeyboard(false);
     Keyboard.dismiss();
-    setState(initialState);
     dispatch(authSignUpUser(state));
+    setState(initialState);
   };
-
-  // const onClose = () => {
-  //   Keyboard.dismiss();
-  //   setIsShownKeyboard(false);
-  // };
 
   const onLayoutRootView = useCallback(async () => {
     if (isReady) {
@@ -91,7 +86,7 @@ export default function RegistrationScreen({ navigation }) {
 
   const keyboardHide = () => {
     setIsShownKeyboard(false);
-    setState(initialState);
+    // setState(initialState);
     Keyboard.dismiss();
   };
   return (

@@ -77,13 +77,13 @@ export default function LoginScreen({ navigation }) {
   const handleSubmit = () => {
     setIsShownKeyboard(false);
     Keyboard.dismiss();
-    setState(initialState);
     dispatch(authSignInUser(state));
+    setState(initialState);
   };
 
   const keyboardHide = ({ navigation }) => {
     setIsShownKeyboard(false);
-    setState(initialState);
+    // setState(initialState);
     Keyboard.dismiss();
   };
 
@@ -136,7 +136,7 @@ export default function LoginScreen({ navigation }) {
               >
                 <Text
                   style={styles.button_title}
-                  onPress={() => navigation.navigate("CreatePostScreen")}
+                  // onPress={() => navigation.navigate("CreatePostScreen")}
                 >
                   Увійти
                 </Text>
