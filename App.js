@@ -4,7 +4,7 @@ import { LogBox } from "react-native";
 // import { createStackNavigator } from "@react-navigation/stack";
 // import { StatusBar } from "expo-status-bar";
 import { Dimensions, View } from "react-native";
-// import { Provider } from "react-redux";
+import { Provider } from "react-redux";
 
 // import { NavigationContainer } from "@react-navigation/native";
 // import { createStackNavigator } from "@react-navigation/stack";
@@ -18,11 +18,7 @@ import * as Font from "expo-font";
 // import LoginScreen from "../Screens/auth/LoginScreen";
 import Main from "./components/Main";
 
-// const initialState = {
-//   login: "",
-//   email: "",
-//   password: "",
-// };
+import { store } from "./redux/store";
 
 SplashScreen.preventAutoHideAsync();
 LogBox.ignoreAllLogs();
@@ -80,9 +76,9 @@ export default function App() {
   // };
 
   return (
-    // <Provider store={store}>
-    <Main />
-    // </Provider>
+    <Provider store={store}>
+      <Main />
+    </Provider>
   );
 }
 
