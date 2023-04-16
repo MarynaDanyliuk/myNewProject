@@ -11,6 +11,8 @@ export const authSignUpUser =
 
       const user = await db.auth().currentUser;
 
+      console.log(user);
+
       await user.updateProfile({
         displayName: login,
       });
@@ -35,6 +37,7 @@ export const authSignInUser =
   async (dispatch, getState) => {
     try {
       const user = await db.auth().signInWithEmailAndPassword(email, password);
+      console.log("user:", user);
     } catch (error) {
       console.log("error", error);
       console.log("error.message");

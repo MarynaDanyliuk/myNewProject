@@ -8,8 +8,11 @@ import { useRoute } from "../router";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
+import db from "../firebase/config";
+
 const Main = () => {
-  const routing = useRoute(null);
+  // const routing = useRoute(null);
+  const routing = useRoute(false);
 
   const [isReady, setIsReady] = useState(false);
   useEffect(() => {
