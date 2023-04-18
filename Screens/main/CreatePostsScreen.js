@@ -62,6 +62,39 @@ export default function CreatePostScreen({ navigation }) {
     setPhoto(null);
   };
 
+  // const uploadPostToServer = async () => {
+  //   try {
+  //     const photo = await uploadPhotoToServer();
+  //     const createPost = await db.firestore().collection("posts").add({
+  //       photo,
+  //       comment,
+  //       location: location.coords,
+  //       userId,
+  //       nickname,
+  //       locationName,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // const uploadPhotoToServer = async () => {
+  //   const response = await fetch(photo);
+  //   const file = await response.blob();
+
+  //   const uniquePostId = Date.now().toString();
+
+  //   await db.storage().ref(`postImage/${uniquePostId}`).put(file);
+
+  //   const processedPhoto = await db
+  //     .storage()
+  //     .ref(`postImage`)
+  //     .child(uniquePostId)
+  //     .getDownloadURL();
+
+  //   return processedPhoto;
+  // };
+
   return (
     <View style={styles.container}>
       <Camera style={styles.camera} type={type} ref={setCamera}>

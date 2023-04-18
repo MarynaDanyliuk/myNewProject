@@ -71,6 +71,7 @@ export default function RegistrationScreen({ navigation }) {
     setIsShownKeyboard(false);
     Keyboard.dismiss();
     console.log(state);
+
     dispatch(authSignUpUser(state));
     setState(initialState);
   };
@@ -92,7 +93,7 @@ export default function RegistrationScreen({ navigation }) {
   };
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <TouchableWithoutFeedback onPress={hangleSubmit}>
+      <TouchableWithoutFeedback onPress={keyboardHide}>
         <ImageBackground
           source={require("../../assets/images/background.jpg")}
           style={styles.image}

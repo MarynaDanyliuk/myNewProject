@@ -1,47 +1,419 @@
-import React from "react";
-import { View, StyleSheet, Text, ImageBackground } from "react-native";
-// import { MaterialIcons } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  StyleSheet,
+  Text,
+  ImageBackground,
+  FlatList,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+} from "react-native";
 
-export default function ProfileScreen() {
+import { authSignOutUser } from "../../redux/auth/authOperations";
+import { useDispatch, useSelector } from "react-redux";
+import db from "../../firebase/config";
+
+// import { MaterialIcons } from "@expo/vector-icons";
+// import { EvilIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
+
+export default function ProfileScreen({ navigation }) {
+  const dispatch = useDispatch();
+  const [userPosts, setUserPosts] = useState([]);
+  const { userId, login } = useSelector((state) => state.auth);
+  const [dimensions, setDimensions] = useState(Dimensions.get("window").width);
+
+  const getUserPosts = async () => {
+    await db
+      .firestore()
+      .collection("posts")
+      .where("userId", "==", userId)
+      .onSnapshot((data) =>
+        setUserPosts(data.docs.map((doc) => ({ ...doc.data() })))
+      );
+  };
+
+  useEffect(() => {
+    getUserPosts();
+  });
+
+  const signOut = () => {
+    dispatch(authSignOutUser());
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
         source={require("../../assets/images/background.jpg")}
         style={styles.image}
       >
-        <View
-          style={{
-            ...styles.form_registration,
-          }}
-        >
-          <View style={styles.wrapper_avatar}>
-            <View style={styles.avatar}></View>
+        <SafeAreaView style={{ ...styles.content, width: dimensions }}>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>{login}</Text>
           </View>
-          <Text style={styles.screen_title}>Mary Danyliuk</Text>
-          <View style={styles.post}>
-            <View style={styles.post_photo}></View>
-            <View style={styles.post_data}>
-              <Text style={styles.post_title}>Forest</Text>
-              <View style={styles.post_wrapper}>
-                <EvilIcons name="comment" size={32} color="grey" />
-                <Text style={styles.comment}>0</Text>
-                <View style={styles.location_wrapper}>
-                  <EvilIcons name="location" size={32} color="grey" />
-                  <Text style={styles.location}>Ivanofrankivsk</Text>
+
+          <FlatList
+            style={styles.flatList}
+            data={userPosts}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View>
+                <View style={styles.item}>
+                  <Image
+                    source={{ uri: item.photo }}
+                    style={{ height: 240, borderRadius: 8 }}
+                  />
+                </View>
+                <Text style={styles.itemText}>{item.title}</Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginBottom: 32,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("Comments", { postId: item.id })
+                      }
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        marginRight: 24,
+                      }}
+                    >
+                      <Feather
+                        name="message-circle"
+                        size={24}
+                        color="#FF6C00"
+                      />
+                      <Text
+                        style={{
+                          fontFamily: "Montserrat-Regular",
+                          color: "#212121",
+                          fontSize: 16,
+                          marginLeft: 6,
+                        }}
+                      >
+                        {"0"}
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{ flexDirection: "row", alignItems: "center" }}
+                    >
+                      <Feather name="thumbs-up" size={24} color="#FF6C00" />
+                      <Text
+                        style={{
+                          fontFamily: "Montserrat-Regular",
+                          color: "#212121",
+                          fontSize: 16,
+                          marginLeft: 6,
+                        }}
+                      >
+                        {"0"}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <TouchableOpacity
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                    onPress={() => {
+                      navigation.navigate("Map", {
+                        location: item.location,
+                      });
+                    }}
+                  >
+                    <Feather name="map-pin" size={24} color="#BDBDBD" />
+                    <Text
+                      style={{
+                        fontFamily: "Montserrat-Regular",
+                        color: "#212121",
+                        fontSize: 16,
+                        marginLeft: 6,
+                        textDecorationLine: "underline",
+                      }}
+                    >
+                      {item.city}
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               </View>
-            </View>
+            )}
+          />
+          <View
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              transform: [{ translateX: 128 }, { translateY: -60 }],
+              backgroundColor: "#F6F6F6",
+              borderRadius: 16,
+              width: 120,
+              height: 120,
+            }}
+          >
+            <Image source={require("../../assets/images/user.png")}></Image>
+            <Image
+              style={{
+                position: "absolute",
+                width: 25,
+                height: 25,
+                backgroundColor: "#FFFFFF",
+                borderRadius: 100,
+                right: -14,
+                bottom: 14,
+              }}
+              source={require("../../assets/images/delete.png")}
+            ></Image>
           </View>
-        </View>
+          <TouchableOpacity
+            style={{ position: "absolute", top: 22, right: 16 }}
+            onPress={signOut}
+          >
+            <Feather name="log-out" size={24} color="#BDBDBD" />
+          </TouchableOpacity>
+        </SafeAreaView>
       </ImageBackground>
     </View>
   );
+  // <View style={styles.container}>
+  //   <ImageBackground
+  //     source={require("../../assets/images/background.jpg")}
+  //     style={styles.image}
+  //   >
+  //     <MaterialIcons
+  //       name="logout"
+  //       size={32}
+  //       color="gray"
+  //       onPress={signOut}
+  //       style={styles.icon_logout}
+  //     />
+  //     <View
+  //       style={{
+  //         ...styles.form_registration,
+  //       }}
+  //     >
+  //       <View style={styles.header}>
+  //         <Text style={styles.screen_title}>{name}</Text>
+  //       </View>
+  //       <FlatList
+  //         style={styles.flatList}
+  //         data={userPosts}
+  //         // keyExtractor={(_, index) => index.toString()}
+  //         keyExtractor={(item) => item.id}
+  //         renderItem={({ item }) => (
+  //           <View>
+  //             <View style={styles.item}>
+  //               <Image
+  //                 source={{ uri: item.photo }}
+  //                 style={{ height: 240, borderRadius: 8 }}
+  //               />
+  //             </View>
+  //             <Text style={styles.itemText}>{item.title}</Text>
+  //             <View
+  //               style={{
+  //                 flexDirection: "row",
+  //                 marginBottom: 32,
+  //                 justifyContent: "space-between",
+  //               }}
+  //             >
+  //               <View
+  //                 style={{
+  //                   flexDirection: "row",
+  //                 }}
+  //               >
+  //                 <TouchableOpacity
+  //                   onPress={() =>
+  //                     navigation.navigate("Comments", { postId: item.id })
+  //                   }
+  //                   style={{
+  //                     flexDirection: "row",
+  //                     alignItems: "center",
+  //                     marginRight: 24,
+  //                   }}
+  //                 >
+  //                   <Feather
+  //                     name="message-circle"
+  //                     size={24}
+  //                     color="#FF6C00"
+  //                   />
+  //                   <Text
+  //                     style={{
+  //                       fontFamily: "Montserrat-Regular",
+  //                       color: "#212121",
+  //                       fontSize: 16,
+  //                       marginLeft: 6,
+  //                     }}
+  //                   >
+  //                     {"0"}
+  //                   </Text>
+  //                 </TouchableOpacity>
+  //                 <TouchableOpacity
+  //                   style={{ flexDirection: "row", alignItems: "center" }}
+  //                 >
+  //                   <Feather name="thumbs-up" size={24} color="#FF6C00" />
+  //                   <Text
+  //                     style={{
+  //                       fontFamily: "Montserrat-Regular",
+  //                       color: "#212121",
+  //                       fontSize: 16,
+  //                       marginLeft: 6,
+  //                     }}
+  //                   >
+  //                     {"0"}
+  //                   </Text>
+  //                 </TouchableOpacity>
+  //               </View>
+  //               <TouchableOpacity
+  //                 style={{
+  //                   flexDirection: "row",
+  //                   alignItems: "center",
+  //                 }}
+  //                 onPress={() => {
+  //                   navigation.navigate("Map", {
+  //                     location: item.location,
+  //                   });
+  //                 }}
+  //               >
+  //                 <Feather name="map-pin" size={24} color="#BDBDBD" />
+  //                 <Text
+  //                   style={{
+  //                     fontFamily: "Montserrat-Regular",
+  //                     color: "#212121",
+  //                     fontSize: 16,
+  //                     marginLeft: 6,
+  //                     textDecorationLine: "underline",
+  //                   }}
+  //                 >
+  //                   {item.city}
+  //                 </Text>
+  //               </TouchableOpacity>
+  //             </View>
+  //           </View>
+  //         )}
+  //       />
+  //       <View
+  //         style={{
+  //           position: "absolute",
+  //           left: 0,
+  //           top: 0,
+  //           transform: [{ translateX: 128 }, { translateY: -60 }],
+  //           backgroundColor: "#F6F6F6",
+  //           borderRadius: 16,
+  //           width: 120,
+  //           height: 120,
+  //         }}
+  //       >
+  //         <Image source={require("../../assets/images/user.png")}></Image>
+  //         <Image
+  //           style={{
+  //             position: "absolute",
+  //             width: 25,
+  //             height: 25,
+  //             backgroundColor: "#FFFFFF",
+  //             borderRadius: 100,
+  //             right: -14,
+  //             bottom: 14,
+  //           }}
+  //           source={require("../../assets/images/user.png")}
+  //         ></Image>
+  //       </View>
+  //       <TouchableOpacity
+  //         style={{ position: "absolute", top: 22, right: 16 }}
+  //         onPress={signOut}
+  //       >
+  //         <Feather name="log-out" size={24} color="#BDBDBD" />
+  //       </TouchableOpacity>
+  //       {/* <View style={styles.wrapper_avatar}>
+  //         <View style={styles.avatar}></View>
+  //       </View> */}
+  //       {/* <FlatList
+  //         style={styles.flatList}
+  //         data={userPosts}
+  //         keyExtractor={(_, index) => index.toString()}
+  //         renderItem={({ item }) => (
+  //           <View style={styles.postWrapper}>
+  //             <Image source={{ uri: item.photo }} style={styles.photo} />
+  //             <Text style={styles.name}>{item.comment}</Text>
+  //             <View style={{ flex: 1, flexDirection: "row" }}>
+  //               <View>
+  //                 <EvilIcons
+  //                   onPress={() =>
+  //                     navigation.navigate("Comments", {
+  //                       postId: item.id,
+  //                       photo: item.photo,
+  //                     })
+  //                   }
+  //                   name="comment"
+  //                   size={32}
+  //                   color="#FF6C00"
+  //                 />
+  //               </View>
+  //               <View
+  //                 style={{
+  //                   flex: 1,
+  //                   flexDirection: "row",
+  //                   justifyContent: "flex-end",
+  //                 }}
+  //               >
+  //                 <EvilIcons
+  //                   name="location"
+  //                   size={32}
+  //                   color="#FF6C00"
+  //                   onPress={() =>
+  //                     navigation.navigate("Map", { location: item.location })
+  //                   }
+  //                 />
+  //                 <Text>{item.locationName}</Text>
+  //               </View>
+  //             </View>
+  //           </View>
+  //         )} */}
+  //       {/* /> */}
+  //       {/* <View style={styles.wrapper_avatar}>
+  //         <View style={styles.avatar}></View>
+  //       </View>
+  //       <Text style={styles.screen_title}>Mary Danyliuk</Text>
+  //       <View style={styles.post}>
+  //         <View style={styles.post_photo}></View>
+  //         <View style={styles.post_data}>
+  //           <Text style={styles.post_title}>Forest</Text>
+  //           <View style={styles.post_wrapper}>
+  //             <EvilIcons name="comment" size={32} color="grey" />
+  //             <Text style={styles.comment}>0</Text>
+  //             <View style={styles.location_wrapper}>
+  //               <EvilIcons name="location" size={32} color="grey" />
+  //               <Text style={styles.location}>Ivanofrankivsk</Text>
+  //             </View>
+  //           </View>
+  //         </View>
+  //       </View> */}
+  //     </View>
+  //   </ImageBackground>
+  // </View>
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff",
+  },
+  icon_logout: {
+    position: "absolute",
+    display: "flex",
+    top: 0,
+    right: 0,
+    marginRight: 8,
+    marginTop: 8,
   },
   screen_title: {
     fontFamily: "Montserrat-Regular",
@@ -116,5 +488,66 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "Montserrat-Regular",
     color: "grey",
+  },
+  // ______________
+  flatList: {
+    position: "relative",
+    marginHorizontal: 16,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+  },
+  header: {
+    alignItems: "center",
+    marginBottom: 32,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingTop: 147,
+  },
+  content: {
+    position: "relative",
+    backgroundColor: "#ffffff",
+    borderTopLeftRadius: 25,
+    paddingTop: 92,
+    borderTopRightRadius: 25,
+    height: "100%",
+  },
+  header: {
+    alignItems: "center",
+    marginBottom: 32,
+  },
+  headerText: {
+    fontFamily: "Montserrat-Bold",
+    color: "#212121",
+    fontSize: 30,
+  },
+  flatList: {
+    position: "relative",
+    marginHorizontal: 16,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+  },
+  item: {
+    backgroundColor: "#F6F6F6",
+    height: 240,
+    borderWidth: 1,
+    borderColor: "#E8E8E8",
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  itemText: {
+    fontFamily: "Montserrat-Bold",
+    color: "#212121",
+    fontSize: 16,
+    marginBottom: 11,
   },
 });
