@@ -54,6 +54,7 @@ export default function LoginScreen({ navigation }) {
   });
 
   const dispatch = useDispatch();
+  const { email, password } = state;
 
   useEffect(() => {
     const onChange = () => {
@@ -77,12 +78,12 @@ export default function LoginScreen({ navigation }) {
   const handleSubmit = () => {
     setIsShownKeyboard(false);
     Keyboard.dismiss();
-    console.log(state);
+    // console.log(state);
     dispatch(authSignInUser(state));
     setState(initialState);
   };
 
-  const keyboardHide = ({ navigation }) => {
+  const keyboardHide = () => {
     setIsShownKeyboard(false);
     // setState(initialState);
     Keyboard.dismiss();
@@ -109,7 +110,7 @@ export default function LoginScreen({ navigation }) {
                 style={styles.input}
                 placeholder="Електронна пошта"
                 placeholderTextColor="#BDBDBD"
-                value={state.email}
+                value={email}
                 onChangeText={(value) => {
                   setState((prevState) => ({ ...prevState, email: value }));
                 }}
@@ -121,7 +122,7 @@ export default function LoginScreen({ navigation }) {
                 style={styles.input}
                 placeholder="Пароль"
                 placeholderTextColor="#BDBDBD"
-                value={state.password}
+                value={password}
                 onChangeText={(value) => {
                   setState((prevState) => ({ ...prevState, password: value }));
                 }}

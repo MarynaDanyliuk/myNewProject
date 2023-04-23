@@ -13,30 +13,51 @@ import {
 
 import { authSignOutUser } from "../../redux/auth/authOperations";
 import { useDispatch, useSelector } from "react-redux";
+
+import { collection, getDocs, query, where } from "firebase/firestore";
 import db from "../../firebase/config";
 
 // import { MaterialIcons } from "@expo/vector-icons";
 // import { EvilIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 
-export default function ProfileScreen({ navigation }) {
+export default function ProfileScreen({ route, navigation }) {
   const dispatch = useDispatch();
   const [userPosts, setUserPosts] = useState([]);
-  const { userId, login } = useSelector((state) => state.auth);
+  const { userId, nickname } = useSelector((state) => state.auth);
   const [dimensions, setDimensions] = useState(Dimensions.get("window").width);
 
+  // const getUserPosts = async () => {
+  //   await db
+  //     .firestore()
+  //     .collection(db, "posts")
+  //     .where("userId", "==", userId)
+  //     .onSnapshot((data) =>
+  //       setUserPosts(data.docs.map((doc) => ({ ...doc.data() })))
+  //     );
+  // };
+
   const getUserPosts = async () => {
-    await db
-      .firestore()
-      .collection("posts")
-      .where("userId", "==", userId)
-      .onSnapshot((data) =>
-        setUserPosts(data.docs.map((doc) => ({ ...doc.data() })))
-      );
+    const postsRef = await collection(db, "posts");
+    const q = await query(postsRef, where("userId", "==", userId));
+    const querySnapshot = await getDocs(q);
+    setUserPosts(
+      querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    );
   };
 
   useEffect(() => {
+    const onChange = () => {
+      const width = Dimensions.get("window").width;
+      setDimensions(width);
+    };
+    Dimensions.addEventListener("change", onChange);
     getUserPosts();
+  }, []);
+  useEffect(() => {
+    if (route.params) {
+      setUserPosts((prevState) => [...prevState, route.params]);
+    }
   });
 
   const signOut = () => {
@@ -51,9 +72,8 @@ export default function ProfileScreen({ navigation }) {
       >
         <SafeAreaView style={{ ...styles.content, width: dimensions }}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>{login}</Text>
+            <Text style={styles.screen_title}>{nickname}</Text>
           </View>
-
           <FlatList
             style={styles.flatList}
             data={userPosts}
@@ -149,32 +169,24 @@ export default function ProfileScreen({ navigation }) {
               </View>
             )}
           />
-          <View
-            style={{
-              position: "absolute",
-              left: 0,
-              top: 0,
-              transform: [{ translateX: 128 }, { translateY: -60 }],
-              backgroundColor: "#F6F6F6",
-              borderRadius: 16,
-              width: 120,
-              height: 120,
-            }}
-          >
-            <Image source={require("../../assets/images/user.png")}></Image>
-            <Image
-              style={{
-                position: "absolute",
-                width: 25,
-                height: 25,
-                backgroundColor: "#FFFFFF",
-                borderRadius: 100,
-                right: -14,
-                bottom: 14,
-              }}
-              source={require("../../assets/images/delete.png")}
-            ></Image>
+          <View style={styles.wrapper_avatar}>
+            <View style={styles.avatar}>
+              <Image source={require("../../assets/images/user.png")}></Image>
+              <Image
+                style={{
+                  position: "absolute",
+                  width: 25,
+                  height: 25,
+                  backgroundColor: "#FFFFFF",
+                  borderRadius: 100,
+                  right: -14,
+                  bottom: 0,
+                }}
+                source={require("../../assets/images/delete.png")}
+              ></Image>
+            </View>
           </View>
+
           <TouchableOpacity
             style={{ position: "absolute", top: 22, right: 16 }}
             onPress={signOut}
@@ -421,7 +433,7 @@ const styles = StyleSheet.create({
     fontSize: "30px",
     lineHeight: "35.16px",
     textAlign: "center",
-    marginBottom: 33,
+    // marginBottom: 33,
     marginTop: 92,
   },
   image: {
@@ -445,7 +457,7 @@ const styles = StyleSheet.create({
     height: 120,
     backgroundColor: "#F6F6F6",
     borderRadius: 20,
-    top: -60,
+    top: -655,
   },
   post: {
     marginBottom: 32,
@@ -489,21 +501,12 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-Regular",
     color: "grey",
   },
-  // ______________
   flatList: {
     position: "relative",
     marginHorizontal: 16,
     backgroundColor: "#fff",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-  },
-  header: {
-    alignItems: "center",
-    marginBottom: 32,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
   },
   image: {
     flex: 1,
@@ -523,18 +526,6 @@ const styles = StyleSheet.create({
   header: {
     alignItems: "center",
     marginBottom: 32,
-  },
-  headerText: {
-    fontFamily: "Montserrat-Bold",
-    color: "#212121",
-    fontSize: 30,
-  },
-  flatList: {
-    position: "relative",
-    marginHorizontal: 16,
-    backgroundColor: "#fff",
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
   },
   item: {
     backgroundColor: "#F6F6F6",

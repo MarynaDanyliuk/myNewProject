@@ -22,7 +22,7 @@ import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
 const initialState = {
-  login: "",
+  nickname: "",
   email: "",
   password: "",
 };
@@ -37,6 +37,8 @@ export default function RegistrationScreen({ navigation }) {
   const [isShownKeyboard, setIsShownKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
   const [isReady, setIsReady] = useState(false);
+
+  const { nickname, email, password } = state;
 
   const dispatch = useDispatch();
 
@@ -115,9 +117,9 @@ export default function RegistrationScreen({ navigation }) {
                 style={styles.input}
                 placeholder="Логін"
                 placeholderTextColor="#BDBDBD"
-                value={state.login}
+                value={nickname}
                 onChangeText={(value) => {
-                  setState((prevState) => ({ ...prevState, login: value }));
+                  setState((prevState) => ({ ...prevState, nickname: value }));
                 }}
                 onFocus={() => {
                   setIsShownKeyboard(true);
@@ -127,7 +129,7 @@ export default function RegistrationScreen({ navigation }) {
                 style={styles.input}
                 placeholder="Електронна пошта"
                 placeholderTextColor="#BDBDBD"
-                value={state.email}
+                value={email}
                 onChangeText={(value) => {
                   setState((prevState) => ({ ...prevState, email: value }));
                 }}
@@ -139,7 +141,7 @@ export default function RegistrationScreen({ navigation }) {
                 style={styles.input}
                 placeholder="Пароль"
                 placeholderTextColor="#BDBDBD"
-                value={state.password}
+                value={password}
                 onChangeText={(value) => {
                   setState((prevState) => ({ ...prevState, password: value }));
                 }}
@@ -156,13 +158,9 @@ export default function RegistrationScreen({ navigation }) {
               >
                 <Text style={styles.button_title}>Зареєструватись</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                // title="Go to Register"
-                onPress={() => navigation.navigate("Login")}
-              >
+              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
                 <Text style={styles.link}>У вас уже є аккаунт? Увійти</Text>
               </TouchableOpacity>
-              {/* <Text style={styles.link}>У вас уже є аккаунт? Увійти</Text> */}
             </View>
           </KeyboardAvoidingView>
         </ImageBackground>

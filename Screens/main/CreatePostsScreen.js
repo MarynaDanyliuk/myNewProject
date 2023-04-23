@@ -53,7 +53,11 @@ export default function CreatePostScreen({ navigation }) {
   };
 
   const sendPhoto = () => {
-    navigation.navigate("PostsScreen", { screen: "Home", params: { photo } });
+    navigation.navigate("PostsScreen", {
+      screen: "Home",
+      params: { photo },
+    });
+
     console.log(navigation);
     reset();
   };
