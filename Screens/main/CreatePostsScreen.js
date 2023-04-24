@@ -1,5 +1,6 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+
 import {
   View,
   Text,
@@ -9,15 +10,18 @@ import {
   TouchableHighlight,
   Image,
 } from "react-native";
+
 import { Feather } from "@expo/vector-icons";
 
 import { Camera, CameraType } from "expo-camera";
 import * as Location from "expo-location";
+import * as MediaLibrary from "expo-media-library";
 
 export default function CreatePostScreen({ navigation }) {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState("");
   const [type, setType] = useState(CameraType.back);
+  const [comment, setComment] = useState("");
 
   const [location, setLocation] = useState(null);
   const [locationName, setLocationName] = useState("Waiting..");
@@ -44,60 +48,62 @@ export default function CreatePostScreen({ navigation }) {
     );
     const photo = await camera.takePictureAsync();
     const location = await Location.getCurrentPositionAsync();
-    console.log(location);
-    console.log("latitude", location.coords.latitude);
-    console.log("longitude", location.coords.longitude);
+    // console.log(location);
+    // console.log("latitude", location.coords.latitude);
+    // console.log("longitude", location.coords.longitude);
     setPhoto(photo.uri);
     setLocation(location);
-    console.log(photo.uri);
+    // console.log(photo.uri);
   };
 
   const sendPhoto = () => {
+    uploadPostToServer();
     navigation.navigate("PostsScreen", {
       screen: "Home",
       params: { photo },
     });
-
-    console.log(navigation);
+    // console.log(navigation);
     reset();
   };
 
   const reset = () => {
+    setLocationName("");
+    setComment("");
     setPhoto(null);
   };
 
-  // const uploadPostToServer = async () => {
-  //   try {
-  //     const photo = await uploadPhotoToServer();
-  //     const createPost = await db.firestore().collection("posts").add({
-  //       photo,
-  //       comment,
-  //       location: location.coords,
-  //       userId,
-  //       nickname,
-  //       locationName,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const uploadPostToServer = async () => {
+    try {
+      const photo = await uploadPhotoToServer();
+      const createPost = await db.firestore().collection("posts").add({
+        photo,
+        comment,
+        location: location.coords,
+        userId,
+        nickname,
+        locationName,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // const uploadPhotoToServer = async () => {
-  //   const response = await fetch(photo);
-  //   const file = await response.blob();
+  const uploadPhotoToServer = async () => {
+    const response = await fetch(photo);
+    const file = await response.blob();
 
-  //   const uniquePostId = Date.now().toString();
+    const uniquePostId = Date.now().toString();
 
-  //   await db.storage().ref(`postImage/${uniquePostId}`).put(file);
+    await db.storage().ref(`postImage/${uniquePostId}`).put(file);
 
-  //   const processedPhoto = await db
-  //     .storage()
-  //     .ref(`postImage`)
-  //     .child(uniquePostId)
-  //     .getDownloadURL();
+    const processedPhoto = await db
+      .storage()
+      .ref(`postImage`)
+      .child(uniquePostId)
+      .getDownloadURL();
 
-  //   return processedPhoto;
-  // };
+    return processedPhoto;
+  };
 
   return (
     <View style={styles.container}>
@@ -124,8 +130,8 @@ export default function CreatePostScreen({ navigation }) {
           <TextInput
             style={styles.input}
             placeholder="Название"
-            // value={}
-            // onChangeText={}
+            value={comment}
+            onChangeText={setComment}
           />
         </View>
         <View style={{ marginBottom: 32 }}>
@@ -138,7 +144,7 @@ export default function CreatePostScreen({ navigation }) {
         </View>
         <TouchableHighlight
           style={styles.submitBtn}
-          // onPress={}
+          onPress={sendPhoto}
           underlayColor="#FF6C00"
         >
           <Text style={styles.btnText}>Опубликовать</Text>
@@ -204,10 +210,3 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
 });
-
-// ______________________________________
-// function toggleCameraType() {
-//   setType((current) =>
-//     current === CameraType.back ? CameraType.front : CameraType.back
-//   );
-// }

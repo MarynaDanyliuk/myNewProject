@@ -17,25 +17,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import db from "../../firebase/config";
 
-// import { MaterialIcons } from "@expo/vector-icons";
-// import { EvilIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 
-export default function ProfileScreen({ route, navigation }) {
+export default function ProfileScreen({ navigation }) {
   const dispatch = useDispatch();
   const [userPosts, setUserPosts] = useState([]);
   const { userId, nickname } = useSelector((state) => state.auth);
   const [dimensions, setDimensions] = useState(Dimensions.get("window").width);
-
-  // const getUserPosts = async () => {
-  //   await db
-  //     .firestore()
-  //     .collection(db, "posts")
-  //     .where("userId", "==", userId)
-  //     .onSnapshot((data) =>
-  //       setUserPosts(data.docs.map((doc) => ({ ...doc.data() })))
-  //     );
-  // };
 
   const getUserPosts = async () => {
     const postsRef = await collection(db, "posts");
@@ -54,11 +44,6 @@ export default function ProfileScreen({ route, navigation }) {
     Dimensions.addEventListener("change", onChange);
     getUserPosts();
   }, []);
-  useEffect(() => {
-    if (route.params) {
-      setUserPosts((prevState) => [...prevState, route.params]);
-    }
-  });
 
   const signOut = () => {
     dispatch(authSignOutUser());
@@ -86,7 +71,7 @@ export default function ProfileScreen({ route, navigation }) {
                     style={{ height: 240, borderRadius: 8 }}
                   />
                 </View>
-                <Text style={styles.itemText}>{item.title}</Text>
+                <Text style={styles.itemText}>{item.comment}</Text>
                 <View
                   style={{
                     flexDirection: "row",
@@ -101,7 +86,10 @@ export default function ProfileScreen({ route, navigation }) {
                   >
                     <TouchableOpacity
                       onPress={() =>
-                        navigation.navigate("Comments", { postId: item.id })
+                        navigation.navigate("Comments", {
+                          postId: item.id,
+                          photo: item.photo,
+                        })
                       }
                       style={{
                         flexDirection: "row",
@@ -126,6 +114,12 @@ export default function ProfileScreen({ route, navigation }) {
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("MapScreen", {
+                          postId: item.id,
+                          photo: item.photo,
+                        })
+                      }
                       style={{ flexDirection: "row", alignItems: "center" }}
                     >
                       <Feather name="thumbs-up" size={24} color="#FF6C00" />
@@ -147,7 +141,7 @@ export default function ProfileScreen({ route, navigation }) {
                       alignItems: "center",
                     }}
                     onPress={() => {
-                      navigation.navigate("Map", {
+                      navigation.navigate("CommentsScreen", {
                         location: item.location,
                       });
                     }}

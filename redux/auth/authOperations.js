@@ -11,13 +11,6 @@ export const authSignUpUser =
 
       const user = await db.auth().currentUser;
 
-      // await updateProfile(auth.currentUser, {
-      //   displayName: nickname,
-      // });
-      // const { displayName, uid } = auth.currentUser;
-
-      console.log(user);
-
       await user.updateProfile({
         displayName: nickname,
       });
@@ -39,7 +32,7 @@ export const authSignUpUser =
 
 export const authSignInUser =
   ({ email, password }) =>
-  async (dispatch, getState) => {
+  async () => {
     try {
       const user = await db.auth().signInWithEmailAndPassword(email, password);
       console.log("user:", user);
@@ -50,17 +43,18 @@ export const authSignInUser =
     }
   };
 
-export const authSignOutUser = () => async (dispatch, getState) => {
+export const authSignOutUser = () => async (dispatch) => {
   await db.auth().signOut();
   dispatch(authSignOut());
 };
 
-export const authChangeStateUser = () => async (dispatch, getState) => {
+export const authChangeStateUser = () => async (dispatch) => {
   await db.auth().onAuthStateChanged((user) => {
     if (user) {
       const userUpdateProfile = {
         nickname: user.displayName,
         userId: user.uid,
+        email: user.email,
       };
 
       dispatch(authStateChange({ stateChange: true }));

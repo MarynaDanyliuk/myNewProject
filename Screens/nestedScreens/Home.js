@@ -1,65 +1,93 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Button,
-} from "react-native";
+import { View, Text, StyleSheet, Image, Button } from "react-native";
+
+import { useDispatch, useSelector } from "react-redux";
 
 import { EvilIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FlatList } from "react-native-gesture-handler";
 
-// import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-// import { EvilIcons } from "@expo/vector-icons";
-// import { MaterialIcons } from "@expo/vector-icons";
-
 // import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function Home({ route, navigation }) {
-  const [posts, setPosts] = useState([]);
+  const dispatch = useDispatch();
+  const [userPosts, setUserPosts] = useState([]);
+  const { userId, nickname, email } = useSelector((state) => state.auth);
 
-  console.log(route.params);
+  const getUserPosts = async () => {
+    const postsRef = await collection(db, "posts");
+    const q = await query(postsRef, where("userId", "==", userId));
+    const querySnapshot = await getDocs(q);
+    setUserPosts(
+      querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    );
+  };
+  // console.log(route.params);
 
   useEffect(() => {
-    if (route.params) {
-      setPosts((prevState) => [...prevState, route.params]);
-    }
+    // if (route.params) {
+    //   setUserPosts((prevState) => [...prevState, route.params]);
+    // }
+
+    getUserPosts();
   }, [route.params]);
-  console.log(posts);
+
+  const signOut = () => {
+    dispatch(authSignOutUser());
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.container_icon}>
-        <MaterialIcons
-          name="logout"
-          size={32}
-          color="gray"
-          // onPress={}
-        />
+        <MaterialIcons name="logout" size={32} color="gray" onPress={signOut} />
       </View>
       <View style={styles.user}>
-        <View style={styles.user_avatar}></View>
+        <View style={styles.wrapper_avatar}>
+          <View>
+            <Image
+              style={styles.user_avatar}
+              source={require("../../assets/images/user.png")}
+            ></Image>
+          </View>
+        </View>
         <View style={styles.user_data}>
-          <Text style={styles.user_name}>Name</Text>
-          <Text>name@mail.com</Text>
+          <Text style={styles.user_name}>{nickname}</Text>
+          <Text>{email}</Text>
         </View>
       </View>
       <FlatList
-        data={posts}
+        data={userPosts}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={styles.post}>
             <Image source={{ uri: item.photo }} style={styles.post_photo} />
             <View style={styles.post_data}>
-              <Text style={styles.post_title}>Forest</Text>
+              <Text style={styles.post_title}>{item.title}</Text>
               <View style={styles.post_wrapper}>
-                <EvilIcons name="comment" size={32} color="grey" />
-                <Text style={styles.comment}>0</Text>
+                <EvilIcons
+                  onPress={() =>
+                    navigation.navigate("CommentsScreen", {
+                      postId: item.id,
+                      photo: item.photo,
+                    })
+                  }
+                  name="comment"
+                  size={32}
+                  color="grey"
+                />
+                <Text style={styles.comment}>{item.comment}</Text>
                 <View style={styles.location_wrapper}>
-                  <EvilIcons name="location" size={32} color="grey" />
-                  <Text style={styles.location}>Ivanofrankivsk</Text>
+                  <EvilIcons
+                    onPress={() =>
+                      navigation.navigate("MapScreen", {
+                        location: item.location,
+                      })
+                    }
+                    name="location"
+                    size={32}
+                    color="grey"
+                  />
+                  <Text style={styles.location}>{item.location}</Text>
                 </View>
               </View>
             </View>
