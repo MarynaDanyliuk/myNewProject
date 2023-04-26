@@ -51,7 +51,7 @@ export default function App() {
   useEffect(() => {
     const onChange = () => {
       const width = Dimensions.get("window").width;
-      console.log(width);
+      // console.log(width);
     };
 
     const dem = Dimensions.addEventListener("change", onChange);

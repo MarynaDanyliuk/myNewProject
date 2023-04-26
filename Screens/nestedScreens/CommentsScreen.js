@@ -10,16 +10,45 @@ import {
   Image,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
+import db from "../../firebase/config";
 
 export default function CommentsScreen({ route }) {
-  const [photo, setPhoto] = useState("");
+  const { postId } = route.params;
+  const photo = route.params.photo;
   const [comment, setComment] = useState("");
+  const [allComments, setAllComments] = useState([]);
+  const { nickname } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    getAllPosts();
+  }, []);
+
+  const addComment = async () => {
+    db.firestore()
+      .collection("posts")
+      .doc(postId)
+      .collection("comments")
+      // .where('uid', isEqualTo: user.uid)
+      .add({ comment, nickname });
+  };
+
+  const getAllPosts = async () => {
+    db.firestore()
+      .collection("posts")
+      .doc(postId)
+      .collection("comments")
+      .onSnapshot((data) =>
+        setAllComments(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      );
+  };
+
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.container}>
         <Image source={{ uri: photo }} style={styles.image} />
         <FlatList
-          // data={allComments}
+          data={allComments}
           renderItem={({ item }) => (
             <View>
               <Text style={styles.author}>{item.nickname}</Text>
@@ -36,12 +65,9 @@ export default function CommentsScreen({ route }) {
           style={styles.input}
           placeholder="Comment"
           value={comment}
-          // onChangeText={}
+          onChangeText={setComment}
         />
-        <TouchableOpacity
-          style={styles.button}
-          // onPress={addComment}
-        >
+        <TouchableOpacity style={styles.button} onPress={addComment}>
           <AntDesign name="arrowup" size={24} color="white" />
         </TouchableOpacity>
       </View>

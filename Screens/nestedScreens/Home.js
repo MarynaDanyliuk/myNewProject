@@ -1,36 +1,53 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  SafeAreaView,
+  Button,
+} from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import { authSignOutUser } from "../../redux/auth/authOperations";
+
+import db from "../../firebase/config";
+import { collection, onSnapshot } from "firebase/firestore";
+
 import { EvilIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { FlatList } from "react-native-gesture-handler";
-
-// import Ionicons from "@expo/vector-icons/Ionicons";
+// import { FlatList } from "react-native-gesture-handler";
 
 export default function Home({ route, navigation }) {
   const dispatch = useDispatch();
-  const [userPosts, setUserPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
   const { userId, nickname, email } = useSelector((state) => state.auth);
 
   const getUserPosts = async () => {
-    const postsRef = await collection(db, "posts");
-    const q = await query(postsRef, where("userId", "==", userId));
-    const querySnapshot = await getDocs(q);
-    setUserPosts(
-      querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    );
+    // await db
+    //   .firestore()
+    //   .collection("posts")
+    //   .onSnapshot((data) =>
+    //     setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    //   );
+    await onSnapshot(collection(db, "posts"), (querySnapshot) => {
+      const updatedPosts = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setPosts(updatedPosts);
+    });
   };
-  // console.log(route.params);
 
   useEffect(() => {
     // if (route.params) {
-    //   setUserPosts((prevState) => [...prevState, route.params]);
+    //   setPosts((prevState) => [...prevState, route.params]);
     // }
 
     getUserPosts();
-  }, [route.params]);
+  }, []);
 
   const signOut = () => {
     dispatch(authSignOutUser());
@@ -55,14 +72,103 @@ export default function Home({ route, navigation }) {
           <Text>{email}</Text>
         </View>
       </View>
-      <FlatList
+      <View>
+        {posts && (
+          <SafeAreaView style={{ paddingBottom: 88 }}>
+            <FlatList
+              style={styles.flat}
+              data={posts}
+              keyExtractor={(_, indx) => indx.toString()}
+              renderItem={({ item }) => (
+                <View>
+                  <View style={styles.item}>
+                    <Image
+                      source={{ uri: item.photo }}
+                      style={{ height: 240, borderRadius: 8 }}
+                    />
+                  </View>
+                  <Text style={styles.itemText}>{item.comment}</Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginBottom: 34,
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          marginRight: 24,
+                        }}
+                        onPress={() => {
+                          navigation.navigate("CommentsScreen", {
+                            photo: item.photo,
+                            postId: item.id,
+                          });
+                        }}
+                      >
+                        <Feather
+                          name="message-circle"
+                          size={24}
+                          color="#FF6C00"
+                        />
+                        <Text
+                          style={{
+                            // fontFamily: "RobotoRegular",
+                            color: "#212121",
+                            fontSize: 16,
+                            marginLeft: 6,
+                          }}
+                        >
+                          0
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                      onPress={() => {
+                        navigation.navigate("MapScreen", {
+                          location: item.location,
+                        });
+                      }}
+                    >
+                      <Feather name="map-pin" size={24} color="#BDBDBD" />
+                      <Text
+                        style={{
+                          // fontFamily: "RobotoRegular",
+                          color: "#212121",
+                          fontSize: 16,
+                          marginLeft: 6,
+                          textDecorationLine: "underline",
+                        }}
+                      >
+                        {item.city}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
+            />
+          </SafeAreaView>
+        )}
+      </View>
+      {/* <FlatList
         data={userPosts}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={styles.post}>
             <Image source={{ uri: item.photo }} style={styles.post_photo} />
             <View style={styles.post_data}>
-              <Text style={styles.post_title}>{item.title}</Text>
+              <Text style={styles.post_title}>{item.comment}</Text>
               <View style={styles.post_wrapper}>
                 <EvilIcons
                   onPress={() =>
@@ -101,7 +207,7 @@ export default function Home({ route, navigation }) {
             />
           </View>
         )}
-      />
+      /> */}
     </View>
   );
 }

@@ -9,13 +9,23 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   Image,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
-
-import { Feather } from "@expo/vector-icons";
 
 import { Camera, CameraType } from "expo-camera";
 import * as Location from "expo-location";
 import * as MediaLibrary from "expo-media-library";
+
+import db from "../../firebase/config";
+
+import { FontAwesome } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+
+// import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
+// import { storage } from "../../firebase/config";
+import { collection, addDoc } from "firebase/firestore";
 
 export default function CreatePostScreen({ navigation }) {
   const [camera, setCamera] = useState(null);
@@ -210,3 +220,5 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
 });
+
+// export default CreatePostScreen;

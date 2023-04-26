@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -11,7 +11,7 @@ import LoginScreen from "./Screens/auth/LoginScreen";
 import ProfileScreen from "./Screens/main/ProfileScreen";
 import PostsScreen from "./Screens/main/PostsScreen";
 import CreatePostScreen from "./Screens/main/CreatePostsScreen";
-import Home from "./Screens/nestedScreens/Home";
+// import Home from "./Screens/nestedScreens/Home";
 
 // import Home from "../nestedScreens/Home";
 // import CommentsScreen from "../nestedScreens/CommentsScreen";

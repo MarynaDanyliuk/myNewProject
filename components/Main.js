@@ -11,10 +11,12 @@ import * as SplashScreen from "expo-splash-screen";
 // import db from "../firebase/config";
 
 const Main = () => {
+  const state = useSelector((state) => state.auth);
+  console.log(state);
+
   const { stateChange } = useSelector((state) => state.auth);
   const routing = useRoute(stateChange);
-  // const [user, setUser] = useState(null);
-
+  // const [user, setUser] = useState(null)
   const [isReady, setIsReady] = useState(false);
 
   const dispatch = useDispatch();
@@ -39,11 +41,11 @@ const Main = () => {
     prepare();
   }, []);
 
-  const onLayoutRootView = useCallback(async () => {
-    if (isReady) {
-      await SplashScreen.hideAsync();
-    }
-  }, [isReady]);
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (isReady) {
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [isReady]);
 
   if (!isReady) {
     return null;
