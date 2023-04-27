@@ -3,17 +3,6 @@ import "firebase/auth";
 import "firebase/storage";
 import "firebase/firestore";
 
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
-import { getFirestore } from "firebase/firestore";
-
-// import "firebase/storage";
-// import "firebase/firestore";
-
-// import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
-
 const firebaseConfig = {
   apiKey: "AIzaSyB7-P7qVDbBg4htvMItNXu0l4FsIhWWhI4",
   authDomain: "myapp-fdbaf.firebaseapp.com",
@@ -24,13 +13,4 @@ const firebaseConfig = {
   measurementId: "G-YWLN1MYM12",
 };
 
-const app = firebase.initializeApp(firebaseConfig);
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-
-const auth = getAuth(app);
-const storage = getStorage(app);
-const db = getFirestore(app);
-export { auth, db, storage };
-
-// export default firebase.initializeApp(firebaseConfig);
+export default firebase.initializeApp(firebaseConfig);

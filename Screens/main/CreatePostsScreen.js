@@ -75,7 +75,7 @@ export default function CreatePostScreen({ navigation }) {
     uploadPostToServer();
     navigation.navigate("PostsScreen", {
       screen: "Home",
-      params: { photo },
+      // params: { photo },
     });
     // console.log(navigation);
     reset();

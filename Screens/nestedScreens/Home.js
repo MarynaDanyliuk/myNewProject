@@ -28,19 +28,19 @@ export default function Home({ route, navigation }) {
   const { userId, nickname, email } = useSelector((state) => state.auth);
 
   const getUserPosts = async () => {
-    // await db
-    //   .firestore()
-    //   .collection("posts")
-    //   .onSnapshot((data) =>
-    //     setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    //   );
-    await onSnapshot(collection(db, "posts"), (querySnapshot) => {
-      const updatedPosts = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setPosts(updatedPosts);
-    });
+    await db
+      .firestore()
+      .collection("posts")
+      .onSnapshot((data) =>
+        setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      );
+    // await onSnapshot(collection(db, "posts"), (querySnapshot) => {
+    //   const updatedPosts = querySnapshot.docs.map((doc) => ({
+    //     ...doc.data(),
+    //     id: doc.id,
+    //   }));
+    //   setPosts(updatedPosts);
+    // });
   };
 
   useEffect(() => {
@@ -50,6 +50,8 @@ export default function Home({ route, navigation }) {
 
     getUserPosts();
   }, [route.params]);
+
+  // route.params;
 
   const signOut = () => {
     dispatch(authSignOutUser());
