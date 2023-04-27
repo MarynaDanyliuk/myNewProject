@@ -3,8 +3,10 @@ import "firebase/auth";
 import "firebase/storage";
 import "firebase/firestore";
 
-// import { initializeApp } from "firebase/app";
-// import { getStorage } from "firebase/storage";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
+import { getFirestore } from "firebase/firestore";
 
 // import "firebase/storage";
 // import "firebase/firestore";
@@ -22,13 +24,13 @@ const firebaseConfig = {
   measurementId: "G-YWLN1MYM12",
 };
 
-// const app = initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
 // const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
-// const auth = getAuth(app);
-// const storage = getStorage(app);
+const auth = getAuth(app);
+const storage = getStorage(app);
+const db = getFirestore(app);
+export { auth, db, storage };
 
-// export { storage };
-
-export default firebase.initializeApp(firebaseConfig);
+// export default firebase.initializeApp(firebaseConfig);

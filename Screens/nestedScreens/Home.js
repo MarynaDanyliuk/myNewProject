@@ -7,6 +7,7 @@ import {
   FlatList,
   SafeAreaView,
   Button,
+  TouchableOpacity,
 } from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +19,7 @@ import { collection, onSnapshot } from "firebase/firestore";
 
 import { EvilIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 // import { FlatList } from "react-native-gesture-handler";
 
 export default function Home({ route, navigation }) {
@@ -42,12 +44,12 @@ export default function Home({ route, navigation }) {
   };
 
   useEffect(() => {
-    // if (route.params) {
-    //   setPosts((prevState) => [...prevState, route.params]);
-    // }
+    if (route.params) {
+      setPosts((prevState) => [...prevState, route.params]);
+    }
 
     getUserPosts();
-  }, []);
+  }, [route.params]);
 
   const signOut = () => {
     dispatch(authSignOutUser());

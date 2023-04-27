@@ -18,6 +18,7 @@ import * as Location from "expo-location";
 import * as MediaLibrary from "expo-media-library";
 
 import db from "../../firebase/config";
+import { collection, addDoc } from "firebase/firestore";
 
 import { FontAwesome } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
@@ -25,17 +26,19 @@ import { AntDesign } from "@expo/vector-icons";
 
 // import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 // import { storage } from "../../firebase/config";
-import { collection, addDoc } from "firebase/firestore";
+// import { collection, addDoc } from "firebase/firestore";
 
 export default function CreatePostScreen({ navigation }) {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState("");
   const [type, setType] = useState(CameraType.back);
   const [comment, setComment] = useState("");
-
   const [location, setLocation] = useState(null);
+
   const [locationName, setLocationName] = useState("Waiting..");
   const [errorMsg, setErrorMsg] = useState(null);
+
+  const { userId, nickname } = useSelector((state) => state.auth);
 
   useEffect(() => {
     (async () => {
@@ -58,7 +61,7 @@ export default function CreatePostScreen({ navigation }) {
     );
     const photo = await camera.takePictureAsync();
     const location = await Location.getCurrentPositionAsync();
-    // console.log(location);
+    console.log(location);
     // console.log("latitude", location.coords.latitude);
     // console.log("longitude", location.coords.longitude);
     setPhoto(photo.uri);
@@ -67,6 +70,8 @@ export default function CreatePostScreen({ navigation }) {
   };
 
   const sendPhoto = () => {
+    console.log("comment", comment);
+    console.log("location", location);
     uploadPostToServer();
     navigation.navigate("PostsScreen", {
       screen: "Home",
@@ -85,6 +90,14 @@ export default function CreatePostScreen({ navigation }) {
   const uploadPostToServer = async () => {
     try {
       const photo = await uploadPhotoToServer();
+      // await addDoc(collection(db, "postssss"), {
+      //   photo,
+      //   comment,
+      //   location: location.coords,
+      //   userId,
+      //   nickname,
+      //   locationName,
+      // });
       const createPost = await db.firestore().collection("posts").add({
         photo,
         comment,
@@ -94,7 +107,7 @@ export default function CreatePostScreen({ navigation }) {
         locationName,
       });
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 

@@ -29,7 +29,6 @@ export default function CommentsScreen({ route }) {
       .collection("posts")
       .doc(postId)
       .collection("comments")
-      // .where('uid', isEqualTo: user.uid)
       .add({ comment, nickname });
   };
 
