@@ -90,10 +90,6 @@ export default function CreatePostScreen({ navigation }) {
   };
 
   const sendPhoto = () => {
-    // if (!uri) {
-    //   Alert.alert("Загрузите фото");
-    //   return;
-    // }
     console.log("comment", comment);
     console.log("location", location);
     console.log("userId", userId);

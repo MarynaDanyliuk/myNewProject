@@ -27,19 +27,19 @@ export default function ProfileScreen({ navigation }) {
   const { userId, nickname } = useSelector((state) => state.auth);
   const [dimensions, setDimensions] = useState(Dimensions.get("window").width);
 
-  // const getUserPosts = async () => {
-  //   await db
-  //     .firestore()
-  //     .collection("posts")
-  //     .where("userId", "==", userId)
-  //     .onSnapshot((data) =>
-  //       setUserPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  //     );
-  // };
+  const getUserPosts = async () => {
+    await db
+      .firestore()
+      .collection("posts")
+      .where("userId", "==", userId)
+      .onSnapshot((data) =>
+        setUserPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      );
+  };
 
-  // useEffect(() => {
-  //   getUserPosts();
-  // });
+  useEffect(() => {
+    getUserPosts();
+  });
 
   useEffect(() => {
     const onChange = () => {
