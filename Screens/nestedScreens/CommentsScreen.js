@@ -29,7 +29,9 @@ export default function CommentsScreen({ route }) {
       .collection("posts")
       .doc(postId)
       .collection("comments")
-      .add({ comment, nickname });
+      .add({ comment, nickname, createdAt: new Date() });
+
+    setComment("");
   };
 
   const getAllPosts = async () => {
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
   },
 
   author: {
-    fontFamily: "roboto-bold",
+    fontFamily: "Montserrat-Regular",
     marginBottom: 24,
   },
 

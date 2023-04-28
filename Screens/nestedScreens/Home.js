@@ -78,7 +78,7 @@ export default function Home({ route, navigation }) {
         {posts && (
           <SafeAreaView style={{ paddingBottom: 88 }}>
             <FlatList
-              style={styles.flat}
+              // style={styles}
               data={posts}
               keyExtractor={(_, indx) => indx.toString()}
               renderItem={({ item }) => (
@@ -93,7 +93,7 @@ export default function Home({ route, navigation }) {
                   <View
                     style={{
                       flexDirection: "row",
-                      marginBottom: 34,
+                      marginBottom: 32,
                       justifyContent: "space-between",
                     }}
                   >
@@ -112,7 +112,6 @@ export default function Home({ route, navigation }) {
                           navigation.navigate("CommentsScreen", {
                             photo: item.photo,
                             postId: item.id,
-    
                           });
                         }}
                       >
@@ -129,7 +128,7 @@ export default function Home({ route, navigation }) {
                             marginLeft: 6,
                           }}
                         >
-                          0
+                          {"0"}
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -289,6 +288,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "Montserrat-Regular",
     color: "grey",
+  },
+  flatList: {
+    position: "relative",
+    marginHorizontal: 16,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
   },
 });
 

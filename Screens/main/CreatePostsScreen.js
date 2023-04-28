@@ -18,11 +18,11 @@ import * as Location from "expo-location";
 import * as MediaLibrary from "expo-media-library";
 
 import db from "../../firebase/config";
-import { collection, addDoc } from "firebase/firestore";
+// import { collection, addDoc } from "firebase/firestore";
 
-import { FontAwesome } from "@expo/vector-icons";
+// import { FontAwesome } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+// import { AntDesign } from "@expo/vector-icons";
 
 // import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 // import { storage } from "../../firebase/config";
@@ -30,53 +30,75 @@ import { AntDesign } from "@expo/vector-icons";
 
 export default function CreatePostScreen({ navigation }) {
   const [camera, setCamera] = useState(null);
-  const [photo, setPhoto] = useState("");
+  // const [startcamera, setStartCamera] = useState(false);
+  // const [cameraRef, setCameraRef] = useState(null);
+  // const [hasPermission, setHasPermission] = useState(null);
+  // const [isLoading, setIsLoading] = useState(false);
+  const [photo, setPhoto] = useState(null);
   const [type, setType] = useState(CameraType.back);
   const [comment, setComment] = useState("");
   const [location, setLocation] = useState(null);
-
   const [locationName, setLocationName] = useState("");
-  const [errorMsg, setErrorMsg] = useState(null);
+  // const [errorMsg, setErrorMsg] = useState(null);
+  // const [state, setState] = useState([]);
 
   const { userId, nickname } = useSelector((state) => state.auth);
 
   useEffect(() => {
     (async () => {
+      console.log(userId);
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
       } else {
-        console.log(status);
+        // console.log(status);
+        // setStartCamera(true);
         setStartCamera(true);
-        setLocationName(status);
+        setLocationName("");
       }
     })();
   }, []);
 
+  // const startCamera = async () => {
+  //   const { status } = await Camera.requestForegroundPermissionsAsync();
+  //   if (status === "granted") {
+  //     setStartCamera(true);
+  //   } else {
+  //     Alert.alert("Access denied");
+  //   }
+  // };
+
   const takePhoto = async () => {
+    // console.log("userId", userId);
     if (!camera) return;
     setType((current) =>
       current === CameraType.back ? CameraType.front : CameraType.back
     );
     const photo = await camera.takePictureAsync();
+    setPhoto(photo.uri);
+    // const { uri } = await camera.takePictureAsync();
     const coordinates = await Location.getCurrentPositionAsync();
     const location = {
       latitude: coordinates.coords.latitude,
       longitude: coordinates.coords.longitude,
     };
-    // console.log(location);
-    // console.log("latitude", location.coords.latitude);
-    // console.log("longitude", location.coords.longitude);
-    setPhoto(photo.uri);
+
     setLocation(location);
-    // console.log(photo.uri);
+
+    console.log(photo.uri);
   };
 
   const sendPhoto = () => {
+    // if (!uri) {
+    //   Alert.alert("Загрузите фото");
+    //   return;
+    // }
     console.log("comment", comment);
     console.log("location", location);
+    console.log("userId", userId);
     uploadPostToServer();
+    // setState([]);
     navigation.navigate("PostsScreen", {
       screen: "Home",
       // params: { photo },
@@ -86,6 +108,7 @@ export default function CreatePostScreen({ navigation }) {
   };
 
   const reset = () => {
+    // setCamera(null);
     setLocationName("");
     setComment("");
     setPhoto(null);
@@ -94,21 +117,22 @@ export default function CreatePostScreen({ navigation }) {
   const uploadPostToServer = async () => {
     try {
       const photo = await uploadPhotoToServer();
-      // await addDoc(collection(db, "postssss"), {
+      // await addDoc(collection(db, "posts"), {
       //   photo,
       //   comment,
-      //   location: location.coords,
+      //   location: location,
       //   userId,
       //   nickname,
       //   locationName,
       // });
-      const createPost = await db.firestore().collection("posts").add({
+      await db.firestore().collection("posts").add({
         photo,
         comment,
         location: location,
         userId,
         nickname,
         locationName,
+        createdAt: new Date(),
       });
     } catch (error) {
       console.log(error.message);
@@ -128,7 +152,7 @@ export default function CreatePostScreen({ navigation }) {
       .ref(`postImage`)
       .child(uniquePostId)
       .getDownloadURL();
-
+    console.log(processedPhoto);
     return processedPhoto;
   };
 

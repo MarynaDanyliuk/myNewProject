@@ -14,11 +14,11 @@ import {
 import { authSignOutUser } from "../../redux/auth/authOperations";
 import { useDispatch, useSelector } from "react-redux";
 
-import { collection, getDocs, query, where } from "firebase/firestore";
+// import { collection, getDocs, query, where } from "firebase/firestore";
 import db from "../../firebase/config";
 
-import { MaterialIcons } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
+// import { MaterialIcons } from "@expo/vector-icons";
+// import { EvilIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 
 export default function ProfileScreen({ navigation }) {
@@ -27,14 +27,19 @@ export default function ProfileScreen({ navigation }) {
   const { userId, nickname } = useSelector((state) => state.auth);
   const [dimensions, setDimensions] = useState(Dimensions.get("window").width);
 
-  const getUserPosts = async () => {
-    const postsRef = await collection(db, "posts");
-    const q = await query(postsRef, where("userId", "==", userId));
-    const querySnapshot = await getDocs(q);
-    setUserPosts(
-      querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    );
-  };
+  // const getUserPosts = async () => {
+  //   await db
+  //     .firestore()
+  //     .collection("posts")
+  //     .where("userId", "==", userId)
+  //     .onSnapshot((data) =>
+  //       setUserPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  //     );
+  // };
+
+  // useEffect(() => {
+  //   getUserPosts();
+  // });
 
   useEffect(() => {
     const onChange = () => {
@@ -42,7 +47,6 @@ export default function ProfileScreen({ navigation }) {
       setDimensions(width);
     };
     Dimensions.addEventListener("change", onChange);
-    getUserPosts();
   }, []);
 
   const signOut = () => {
@@ -71,7 +75,7 @@ export default function ProfileScreen({ navigation }) {
                     style={{ height: 240, borderRadius: 8 }}
                   />
                 </View>
-                <Text style={styles.itemText}>{item.comment}</Text>
+                <Text style={styles.post_title}>{item.comment}</Text>
                 <View
                   style={{
                     flexDirection: "row",
@@ -82,24 +86,25 @@ export default function ProfileScreen({ navigation }) {
                   <View
                     style={{
                       flexDirection: "row",
+                      alignItems: "center",
                     }}
                   >
                     <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate("Comments", {
-                          postId: item.id,
-                          photo: item.photo,
-                        })
-                      }
                       style={{
                         flexDirection: "row",
                         alignItems: "center",
                         marginRight: 24,
                       }}
+                      onPress={() => {
+                        navigation.navigate("CommentsScreen", {
+                          photo: item.photo,
+                          postId: item.id,
+                        });
+                      }}
                     >
                       <Feather
                         name="message-circle"
-                        size={24}
+                        size={26}
                         color="#FF6C00"
                       />
                       <Text
@@ -114,15 +119,12 @@ export default function ProfileScreen({ navigation }) {
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate("MapScreen", {
-                          postId: item.id,
-                          photo: item.photo,
-                        })
-                      }
-                      style={{ flexDirection: "row", alignItems: "center" }}
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
                     >
-                      <Feather name="thumbs-up" size={24} color="#FF6C00" />
+                      <Feather name="thumbs-up" size={26} color="#FF6C00" />
                       <Text
                         style={{
                           fontFamily: "Montserrat-Regular",
@@ -141,12 +143,12 @@ export default function ProfileScreen({ navigation }) {
                       alignItems: "center",
                     }}
                     onPress={() => {
-                      navigation.navigate("CommentsScreen", {
+                      navigation.navigate("MapScreen", {
                         location: item.location,
                       });
                     }}
                   >
-                    <Feather name="map-pin" size={24} color="#BDBDBD" />
+                    <Feather name="map-pin" size={26} color="#FF6C00" />
                     <Text
                       style={{
                         fontFamily: "Montserrat-Regular",
@@ -156,7 +158,7 @@ export default function ProfileScreen({ navigation }) {
                         textDecorationLine: "underline",
                       }}
                     >
-                      {item.city}
+                      {item.locationName}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -451,7 +453,7 @@ const styles = StyleSheet.create({
     height: 120,
     backgroundColor: "#F6F6F6",
     borderRadius: 20,
-    top: -575,
+    top: -580,
   },
   post: {
     marginBottom: 32,
