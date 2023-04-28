@@ -51,8 +51,6 @@ export default function Home({ route, navigation }) {
     getUserPosts();
   }, [route.params]);
 
-  // route.params;
-
   const signOut = () => {
     dispatch(authSignOutUser());
   };
@@ -91,7 +89,7 @@ export default function Home({ route, navigation }) {
                       style={{ height: 240, borderRadius: 8 }}
                     />
                   </View>
-                  <Text style={styles.itemText}>{item.comment}</Text>
+                  <Text style={styles.post_title}>{item.comment}</Text>
                   <View
                     style={{
                       flexDirection: "row",
@@ -114,17 +112,18 @@ export default function Home({ route, navigation }) {
                           navigation.navigate("CommentsScreen", {
                             photo: item.photo,
                             postId: item.id,
+    
                           });
                         }}
                       >
                         <Feather
                           name="message-circle"
-                          size={24}
+                          size={26}
                           color="#FF6C00"
                         />
                         <Text
                           style={{
-                            // fontFamily: "RobotoRegular",
+                            fontFamily: "Montserrat-Regular",
                             color: "#212121",
                             fontSize: 16,
                             marginLeft: 6,
@@ -145,17 +144,17 @@ export default function Home({ route, navigation }) {
                         });
                       }}
                     >
-                      <Feather name="map-pin" size={24} color="#BDBDBD" />
+                      <Feather name="map-pin" size={26} color="#FF6C00" />
                       <Text
                         style={{
-                          // fontFamily: "RobotoRegular",
+                          fontFamily: "Montserrat-Regular",
                           color: "#212121",
                           fontSize: 16,
                           marginLeft: 6,
                           textDecorationLine: "underline",
                         }}
                       >
-                        {item.city}
+                        {item.locationName}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -263,6 +262,7 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-Regular",
     fontSize: 16,
     lineHeight: 18.75,
+    paddingTop: 5,
   },
   post_wrapper: {
     display: "flex",

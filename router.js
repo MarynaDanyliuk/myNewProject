@@ -68,6 +68,7 @@ export const useRoute = (isAuth) => {
             <AntDesign name="appstore-o" size={24} color="grey" />
           ),
         }}
+        // options={{ headerShown: false }}
         name="PostsScreen"
         component={PostsScreen}
       />

@@ -451,7 +451,7 @@ const styles = StyleSheet.create({
     height: 120,
     backgroundColor: "#F6F6F6",
     borderRadius: 20,
-    top: -655,
+    top: -575,
   },
   post: {
     marginBottom: 32,

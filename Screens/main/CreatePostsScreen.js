@@ -35,7 +35,7 @@ export default function CreatePostScreen({ navigation }) {
   const [comment, setComment] = useState("");
   const [location, setLocation] = useState(null);
 
-  const [locationName, setLocationName] = useState("Waiting..");
+  const [locationName, setLocationName] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
 
   const { userId, nickname } = useSelector((state) => state.auth);
@@ -60,8 +60,12 @@ export default function CreatePostScreen({ navigation }) {
       current === CameraType.back ? CameraType.front : CameraType.back
     );
     const photo = await camera.takePictureAsync();
-    const location = await Location.getCurrentPositionAsync();
-    console.log(location);
+    const coordinates = await Location.getCurrentPositionAsync();
+    const location = {
+      latitude: coordinates.coords.latitude,
+      longitude: coordinates.coords.longitude,
+    };
+    // console.log(location);
     // console.log("latitude", location.coords.latitude);
     // console.log("longitude", location.coords.longitude);
     setPhoto(photo.uri);
@@ -101,7 +105,7 @@ export default function CreatePostScreen({ navigation }) {
       const createPost = await db.firestore().collection("posts").add({
         photo,
         comment,
-        location: location.coords,
+        location: location,
         userId,
         nickname,
         locationName,
@@ -149,7 +153,7 @@ export default function CreatePostScreen({ navigation }) {
         </Text>
       </TouchableOpacity>
       <View style={styles.form}>
-        <View style={{ marginBottom: 31 }}>
+        <View style={{ marginBottom: 31, color: "black" }}>
           <TextInput
             style={styles.input}
             placeholder="Название"
@@ -204,13 +208,13 @@ const styles = StyleSheet.create({
   },
   loadText: {
     fontSize: 16,
-    color: "grey",
+    fontFamily: "Montserrat-Regular",
+    // color: "grey",
   },
   form: {
     marginTop: 32,
   },
   input: {
-    color: "#BDBDBD",
     height: 50,
     borderBottomWidth: 1,
     borderBottomColor: "#E8E8E8",
