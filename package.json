@@ -13,12 +13,14 @@
     "react-devtools-core": "~4.25.0"
   },
   "dependencies": {
+    "@expo/dev-tools": "^0.13.183",
     "@expo/vector-icons": "^13.0.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",
     "@reduxjs/toolkit": "^1.9.3",
+    "eas-cli": "^3.10.2",
     "expo": "~47.0.12",
     "expo-app-loading": "^2.1.1",
     "expo-camera": "~13.1.0",
@@ -37,7 +39,8 @@
     "react-native-screens": "~3.18.0",
     "react-native-splash-screen": "^3.3.0",
     "react-native-vector-icons": "^9.2.0",
-    "react-redux": "^8.0.5"
+    "react-redux": "^8.0.5",
+    "expo-dev-client": "~2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

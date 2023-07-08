@@ -6,7 +6,6 @@ import {
   Image,
   FlatList,
   SafeAreaView,
-  Button,
   TouchableOpacity,
 } from "react-native";
 
@@ -15,12 +14,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { authSignOutUser } from "../../redux/auth/authOperations";
 
 import db from "../../firebase/config";
-import { collection, onSnapshot } from "firebase/firestore";
 
-import { EvilIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-// import { FlatList } from "react-native-gesture-handler";
 
 export default function Home({ route, navigation }) {
   const dispatch = useDispatch();
@@ -34,13 +30,6 @@ export default function Home({ route, navigation }) {
       .onSnapshot((data) =>
         setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
       );
-    // await onSnapshot(collection(db, "posts"), (querySnapshot) => {
-    //   const updatedPosts = querySnapshot.docs.map((doc) => ({
-    //     ...doc.data(),
-    //     id: doc.id,
-    //   }));
-    //   setPosts(updatedPosts);
-    // });
   };
 
   useEffect(() => {
@@ -163,53 +152,6 @@ export default function Home({ route, navigation }) {
           </SafeAreaView>
         )}
       </View>
-      {/* <FlatList
-        data={userPosts}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.post}>
-            <Image source={{ uri: item.photo }} style={styles.post_photo} />
-            <View style={styles.post_data}>
-              <Text style={styles.post_title}>{item.comment}</Text>
-              <View style={styles.post_wrapper}>
-                <EvilIcons
-                  onPress={() =>
-                    navigation.navigate("CommentsScreen", {
-                      postId: item.id,
-                      photo: item.photo,
-                    })
-                  }
-                  name="comment"
-                  size={32}
-                  color="grey"
-                />
-                <Text style={styles.comment}>{item.comment}</Text>
-                <View style={styles.location_wrapper}>
-                  <EvilIcons
-                    onPress={() =>
-                      navigation.navigate("MapScreen", {
-                        location: item.location,
-                      })
-                    }
-                    name="location"
-                    size={32}
-                    color="grey"
-                  />
-                  <Text style={styles.location}>{item.location}</Text>
-                </View>
-              </View>
-            </View>
-            <Button
-              title="go to map"
-              onPress={() => navigation.navigate("MapScreen")}
-            />
-            <Button
-              title="go to Comments"
-              onPress={() => navigation.navigate("CommentsScreen")}
-            />
-          </View>
-        )}
-      /> */}
     </View>
   );
 }
@@ -297,84 +239,3 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
   },
 });
-
-// const Home = ({ route, navigation }) => {
-//   return (
-//     <View style={styles.container}>
-//       <MaterialIcons
-//         name="logout"
-//         size={32}
-//         color="gray"
-//         // onPress={}
-//         style={{ marginBottom: 32 }}
-//       />
-//       <FlatList
-//         data={posts}
-//         keyExtractor={(item, index) => index.toString()}
-//         renderItem={({ item }) => (
-//           <View style={styles.postWrapper}>
-//             <Image source={{ uri: item.photo }} style={styles.photo} />
-//             <Text style={styles.name}>{item.comment}</Text>
-//             <View style={{ flex: 1, flexDirection: "row" }}>
-//               <View>
-//                 <EvilIcons
-//                   onPress={() =>
-//                     navigation.navigate("Comments", {
-//                       postId: item.id,
-//                       photo: item.photo,
-//                     })
-//                   }
-//                   name="comment"
-//                   size={32}
-//                   color="#FF6C00"
-//                 />
-//               </View>
-
-//               <View
-//                 style={{
-//                   flex: 1,
-//                   flexDirection: "row",
-//                   justifyContent: "flex-end",
-//                 }}
-//               >
-//                 <EvilIcons
-//                   name="location"
-//                   size={32}
-//                   color="#FF6C00"
-//                   onPress={() =>
-//                     navigation.navigate("Map", { location: item.location })
-//                   }
-//                 />
-//                 <Text>{item.locationName}</Text>
-//               </View>
-//             </View>
-//           </View>
-//         )}
-//       />
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: "center",
-//     marginHorizontal: 16,
-//   },
-//   postWrapper: {
-//     marginBottom: 32,
-//   },
-//   photo: {
-//     height: 240,
-//     borderRadius: 8,
-//     marginBottom: 8,
-//   },
-
-//   name: {
-//     fontSize: 16,
-//     lineHeight: 19,
-//     marginBottom: 8,
-//   },
-// });
-
-// export default Home;
